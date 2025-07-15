@@ -117,65 +117,84 @@ fakta_menarik = [
 ]
 
 # ========== KONFIGURASI HALAMAN ==========
+# ========== KONFIGURASI HALAMAN ==========
 st.set_page_config(page_title="Uji Senyawa Kimia Lengkap", layout="wide")
 
-tab1, tab2, tab3 = st.tabs([
-    "🔍 Pengertian & Uji Senyawa",
+tab1, tab2, tab3, tab4 = st.tabs([
+    "📘 Pengertian Senyawa",
+    "🔬 Uji Senyawa",
     "📊 Kelarutan, Kebasaan & Titik Didih",
     "🧠 Quiz Golongan Senyawa"
 ])
 
-# ========== TAB 1: Pengertian & Uji ==========
+# ========== TAB 1: Pengertian ==========
 with tab1:
-    st.title("🔬 Pengertian & Uji Golongan Senyawa Kimia")
-    selected = st.selectbox(
-        "Pilih Golongan Senyawa",
-        list(senyawa_data.keys())
-    )
-    
-    # Tampilkan Pengertian
-    pengertian = next((p["Pengertian"] for p in pengertian_senyawa if p["Golongan"] == selected), "Belum ada keterangan.")
-    st.info(f"**Pengertian:** {pengertian}")
-    
+    st.title("📘 Pengertian Golongan Senyawa Kimia")
+    st.markdown("Pilih golongan senyawa di bawah ini untuk melihat penjelasannya.")
+
+    golongan_list = [x["Golongan"] for x in pengertian_senyawa]
+    selected = st.selectbox("Pilih Golongan Senyawa", golongan_list)
+
+    for item in pengertian_senyawa:
+        if item["Golongan"] == selected:
+            st.info(f"**{item['Golongan']}**")
+            st.write(item["Pengertian"])
+
+    if st.checkbox("Tampilkan Semua Pengertian"):
+        st.table({ 
+            "Golongan": [x["Golongan"] for x in pengertian_senyawa],
+            "Pengertian": [x["Pengertian"] for x in pengertian_senyawa]
+        })
+
+# ========== TAB 2: Uji Senyawa ==========
+with tab2:
+    st.title("🔬 Uji Golongan Senyawa Kimia")
+    st.markdown("Pilih golongan senyawa untuk melihat jenis uji, hasil positif, dan keterangannya.")
+
+    selected = st.selectbox("Pilih Golongan Senyawa", list(senyawa_data.keys()), key="uji")
     st.subheader(f"📋 Hasil Uji untuk: {selected}")
+
     for uji in senyawa_data[selected]:
         with st.expander(uji["Nama Uji"]):
-            st.markdown(f"- **Hasil Positif:** {uji['Hasil Positif']}")
-            st.markdown(f"- **Keterangan:** {uji['Keterangan']}")
+            st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
+            st.markdown(f"*Keterangan:* {uji['Keterangan']}")
 
-# ========== TAB 2 ==========
-with tab2:
-    st.title("📊 Data Kelarutan, Kebasaan, dan Titik Didih")
+# ========== TAB 3: Kelarutan ==========
+with tab3:
+    st.title("📊 Data Kelarutan, Kebasaan, dan Titik Didih Senyawa")
+
     tab_kel, tab_pH, tab_td = st.tabs(["Uji Kelarutan", "Kebasaan (pH)", "Titik Didih"])
 
     with tab_kel:
+        st.header("Uji Kelarutan Senyawa")
         for s in data_senyawa:
             st.subheader(s["nama_jenis"])
             st.write(s["kelarutan"])
             st.write("---")
 
     with tab_pH:
+        st.header("Kebasaan Senyawa (pH)")
         for s in data_senyawa:
             st.subheader(s["nama_jenis"])
             st.write(s["kebasaan"])
             st.write("---")
 
     with tab_td:
+        st.header("Titik Didih Senyawa (°C)")
         for s in data_senyawa:
             st.subheader(s["nama_jenis"])
-            st.write(f"{s['titik_didih']} °C" if isinstance(s["titik_didih"], (float, int)) else s["titik_didih"])
+            st.write(f"{s['titik_didih']} °C")
             st.write("---")
 
-# ========== TAB 3: Quiz ==========
-with tab3:
+# ========== TAB 4: Quiz ==========
+with tab4:
     st.title("🧠 Quiz Golongan Senyawa Kimia")
-
     semua_uji = []
     for golongan, daftar_uji in senyawa_data.items():
         for uji in daftar_uji:
             semua_uji.append({**uji, "Golongan": golongan})
 
-    jumlah_soal = min(10, len(semua_uji))
+    jumlah_soal = min(15, len(semua_uji))
 
     if "soal_kuis" not in st.session_state:
         st.session_state["soal_kuis"] = random.sample(semua_uji, k=jumlah_soal)
@@ -190,11 +209,11 @@ with tab3:
     soal_kuis = st.session_state["soal_kuis"]
     opsi_kuis = st.session_state["opsi_kuis"]
 
-    st.markdown("Jawab semua soal, lalu klik Submit Jawaban.")
+    st.markdown("Jawab semua soal terlebih dahulu, lalu klik Submit Jawaban.")
 
     jawaban_pengguna = {}
     for i, soal in enumerate(soal_kuis, 1):
-        st.markdown(f"**Soal {i}:** *{soal['Nama Uji']}* → Hasil: **{soal['Hasil Positif']}**")
+        st.markdown(f"Soal {i}: **{soal['Nama Uji']}** → Hasil: *{soal['Hasil Positif']}*")
         opsi = opsi_kuis[i - 1]
         jawaban = st.radio("Pilih Golongan:", opsi, key=f"kuis_{i}")
         jawaban_pengguna[f"soal_{i}"] = {"jawaban": jawaban, "benar": soal["Golongan"]}
@@ -212,6 +231,7 @@ with tab3:
             for s in salah:
                 st.markdown(f"- {s[0]}: Jawabanmu **{s[1]}**, seharusnya **{s[2]}**")
 
+        st.markdown("---")
         st.subheader("💡 Fakta Menarik Kimia")
         st.info(random.choice(fakta_menarik))
 
