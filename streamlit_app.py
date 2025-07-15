@@ -105,16 +105,21 @@ with tab1:
 with tab2:
     st.title("🧠 Kuis Golongan Senyawa")
 
-    # Menggabungkan semua data uji menjadi list soal
+    # Kumpulkan semua uji sebagai sumber soal
     semua_uji = []
     for golongan, daftar_uji in senyawa_data.items():
         for uji in daftar_uji:
             semua_uji.append({**uji, "Golongan": golongan})
 
     jumlah_soal = min(15, len(semua_uji))
-    soal_kuis = random.sample(semua_uji, k=jumlah_soal)
 
-    st.markdown("Tampilkan soal satu persatu dan belum diisi, lalu klik *Submit Jawaban Semua*.")
+    # Simpan soal ke session_state agar tidak berubah saat rerun
+    if "soal_kuis" not in st.session_state:
+        st.session_state["soal_kuis"] = random.sample(semua_uji, k=jumlah_soal)
+
+    soal_kuis = st.session_state["soal_kuis"]
+
+    st.markdown("Jawab semua soal terlebih dahulu, lalu klik *Submit Jawaban Semua*.")
 
     jawaban_pengguna = {}
     for i, soal in enumerate(soal_kuis, 1):
@@ -142,7 +147,3 @@ with tab2:
     st.markdown("---")
     st.subheader("💡 Fakta Menarik Kimia")
     st.info(random.choice(fakta_menarik))
-
-# ===================== FOOTER =====================
-st.markdown("---")
-st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
