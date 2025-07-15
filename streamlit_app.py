@@ -236,7 +236,7 @@ with tab2:
 
 # ========== TAB 3 ==========
 with tab3:
-    st.title("🧠 Kuis Golongan Senyawa Kimia")
+    st.title("🧠 Quiz Golongan Senyawa Kimia")
     semua_uji = []
     for golongan, daftar_uji in senyawa_data.items():
         for uji in daftar_uji:
