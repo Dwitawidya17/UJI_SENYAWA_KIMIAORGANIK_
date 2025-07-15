@@ -155,154 +155,62 @@ with tab2:
 st.markdown("---")
 st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
 
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Tabel Periodik Interaktif</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    margin: 0;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-  }
-  .container {
-    background: white;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.1);
-    width: 900px;
-    max-width: 95vw;
-    padding: 30px;
-  }
-  h1 {
-    text-align: center;
-    color: #0056b3;
-    margin-bottom: 24px;
-  }
-  .periodic-table {
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    gap: 10px;
-    justify-items: center;
-    margin-bottom: 40px;
-  }
-  .element-tile {
-    background-color: #e0e0e0;
-    border-radius: 8px;
-    box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
-    width: 75px;
-    height: 90px;
-    cursor: pointer;
-    padding: 8px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    user-select: none;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    position: relative;
-  }
-  .element-tile:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 12px rgba(0,0,0,0.2);
-  }
-  .atomic-number {
-    font-size: 14px;
-    text-align: left;
-    font-weight: bold;
-    color: #333;
-  }
-  .symbol {
-    font-size: 26px;
-    font-weight: 800;
-    text-align: center;
-    color: #222;
-  }
-  .name {
-    font-size: 11px;
-    text-align: center;
-    color: #555;
-    user-select: text;
-  }
-  /* Warna kategori unsur */
-  .nonmetal { background-color: #ffcccc; }
-  .noble-gas { background-color: #cceeff; }
-  .alkali-metal { background-color: #ffeecc; }
-  .alkaline-earth-metal { background-color: #ddffdd; }
-  .metalloid { background-color: #ffedb3; }
-  .halogen { background-color: #e0ccff; }
-  .element-info {
-    padding: 20px;
-    border-radius: 10px;
-    background: #e6f2ff;
-    border: 1px solid #b3d9ff;
-    min-height: 130px;
-  }
-  .element-info h2 {
-    margin-top: 0;
-    color: #0056b3;
-    text-align: center;
-  }
-  .element-info p {
-    margin: 6px 0;
-    font-size: 15px;
-    color: #333;
-  }
-</style>
-</head>
-<body>
-<div class="container">
-  <h1>Tabel Periodik Unsur</h1>
-  <div class="periodic-table" id="periodic-table"></div>
-  
-  <div class="element-info">
-    <h2>Informasi Unsur</h2>
-    <p id="info-text">Klik salah satu unsur di tabel untuk melihat detailnya.</p>
-  </div>
-</div>
+import tkinter as tk
+from tkinter import messagebox
 
-<script>
-  // Data unsur periodik sebagai objek JavaScript
-  const elements = {
-    "H": {name: "Hydrogen", atomic_number: 1, atomic_mass: 1.008, category: "nonmetal", description: "Unsur teringan, paling melimpah di alam semesta."},
-    "He": {name: "Helium", atomic_number: 2, atomic_mass: 4.0026, category: "noble-gas", description: "Gas mulia tak berwarna, tak berbau, dan tak berasa. Paling tidak reaktif."},
-    "Li": {name: "Lithium", atomic_number: 3, atomic_mass: 6.94, category: "alkali-metal", description: "Logam paling ringan, digunakan dalam baterai."},
-    "Be": {name: "Beryllium", atomic_number: 4, atomic_mass: 9.0122, category: "alkaline-earth-metal", description: "Logam ringan, digunakan dalam paduan dan cermin."},
-    "B": {name: "Boron", atomic_number: 5, atomic_mass: 10.81, category: "metalloid", description: "Metalloid yang digunakan dalam kaca, keramik, dan deterjen."},
-    "C": {name: "Carbon", atomic_number: 6, atomic_mass: 12.011, category: "nonmetal", description: "Dasar kehidupan di Bumi, membentuk berlian dan grafit."},
-    "N": {name: "Nitrogen", atomic_number: 7, atomic_mass: 14.007, category: "nonmetal", description: "Gas paling melimpah di atmosfer Bumi."},
-    "O": {name: "Oxygen", atomic_number: 8, atomic_mass: 15.999, category: "nonmetal", description: "Penting untuk pernapasan dan pembakaran."},
-    "F": {name: "Fluorine", atomic_number: 9, atomic_mass: 18.998, category: "halogen", description: "Unsur paling reaktif, digunakan dalam pasta gigi."},
-    "Ne": {name: "Neon", atomic_number: 10, atomic_mass: 20.180, category: "noble-gas", description: "Gas mulia yang digunakan dalam lampu neon."}
-  };
+# Data unsur periodik dalam dictionary: simbol => info
+elements = {
+    "H": {
+        "name": "Hydrogen",
+        "atomic_number": 1,
+        "atomic_mass": 1.008,
+        "category": "Nonmetal",
+        "description": "Unsur teringan, paling melimpah di alam semesta."
+    },
+    "He": {
+        "name": "Helium",
+        "atomic_number": 2,
+        "atomic_mass": 4.0026,
+        "category": "Noble Gas",
+        "description": "Gas mulia tak berwarna, tak berbau, dan tak berasa. Paling tidak reaktif."
+    },
+    "Li": {
+        "name": "Lithium",
+        "atomic_number": 3,
+        "atomic_mass": 6.94,
+        "category": "Alkali Metal",
+        "description": "Logam paling ringan, digunakan dalam baterai."
+    },
+    # Tambahkan unsur lain sesuai kebutuhan...
+}
 
-  // Render tabel periodik di div #periodic-table
-  const container = document.getElementById("periodic-table");
-  
-  for (const [symbol, element] of Object.entries(elements)) {
-    const elDiv = document.createElement("div");
-    elDiv.className = element-tile ${element.category};
-    elDiv.title = element.name;
-    elDiv.innerHTML = `
-      <div class="atomic-number">${element.atomic_number}</div>
-      <div class="symbol">${symbol}</div>
-      <div class="name">${element.name}</div>
-    `;
-    elDiv.onclick = () => {
-      const infoText = `
-        <h3>${element.name} (${symbol})</h3>
-        <p><strong>Nomor Atom:</strong> ${element.atomic_number}</p>
-        <p><strong>Massa Atom:</strong> ${element.atomic_mass}</p>
-        <p><strong>Kategori:</strong> ${element.category.replace(/-/g," ")}</p>
-        <p><strong>Deskripsi:</strong> ${element.description}</p>
-      `;
-      document.getElementById("info-text").innerHTML = infoText;
-    };
-    container.appendChild(elDiv);
-  }
-</script>
-</body>
-</html>
+def show_info(symbol):
+    el = elements[symbol]
+    info_text = (f"Nama: {el['name']} ({symbol})\n"
+                 f"Nomor Atom: {el['atomic_number']}\n"
+                 f"Massa Atom: {el['atomic_mass']}\n"
+                 f"Kategori: {el['category']}\n"
+                 f"Deskripsi:\n{el['description']}")
+    text_info.config(state='normal')
+    text_info.delete(1.0, tk.END)
+    text_info.insert(tk.END, info_text)
+    text_info.config(state='disabled')
+
+root = tk.Tk()
+root.title("Tabel Periodik Interaktif")
+
+# Frame untuk tombol unsur
+frame_buttons = tk.Frame(root)
+frame_buttons.pack(padx=10, pady=10)
+
+# Buat tombol dari data unsur
+for i, symbol in enumerate(elements.keys()):
+    btn = tk.Button(frame_buttons, text=symbol, width=6, height=3,
+                    command=lambda s=symbol: show_info(s))
+    btn.grid(row=i//10, column=i%10, padx=3, pady=3)
+
+# Area teks untuk informasi unsur
+text_info = tk.Text(root, width=40, height=10, state='disabled', wrap='word')
+text_info.pack(padx=10, pady=10)
+
+root.mainloop()
