@@ -152,6 +152,7 @@ with tab2:
 
 # ===================== TAB 3: TABEL PERIODIK =====================
 with tab3:
+    st.title("Tabel Periodik")
 # Data unsur periodik: simbol => info detail
 periodic_elements = {
     "H": {
