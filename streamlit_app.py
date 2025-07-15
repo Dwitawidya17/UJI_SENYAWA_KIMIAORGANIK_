@@ -67,7 +67,7 @@ senyawa_data = {
     ],
     "Protein": [
         {"Nama Uji": "Uji Biuret", "Hasil Positif": "Warna ungu", "Keterangan": "Ikatan peptida"},
-        {"Nama Uji": "Uji Xantoproteat", "Hasil Positif": "Warna kuning", "Keterangan": "Gugus aromatik"}
+        {"Nama Uji": "Uji Xantoprotein", "Hasil Positif": "Warna kuning", "Keterangan": "Gugus aromatik"}
     ],
     "Lemak & Minyak": [
         {"Nama Uji": "Uji Kertas", "Hasil Positif": "Noda transparan", "Keterangan": "Ciri khas lipid"},
