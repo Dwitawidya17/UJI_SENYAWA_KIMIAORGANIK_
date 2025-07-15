@@ -135,6 +135,40 @@ with tab3:
     st.write(f"**Golongan:** {data_unsur['Golongan']}")
     st.write(f"**Massa Atom:** {data_unsur['Massa Atom']}")
     st.write(f"**Keterangan:** {data_unsur['Keterangan']}")
+periodic_data = [
+    {"Unsur": "H",  "Nama": "Hidrogen",     "No Atom": 1,  "Simbol": "H",  "Golongan": "Non-logam",          "Massa Atom": 1.008,    "Keterangan": "Gas ringan, penyusun utama air."},
+    {"Unsur": "He", "Nama": "Helium",       "No Atom": 2,  "Simbol": "He", "Golongan": "Gas mulia",          "Massa Atom": 4.0026,   "Keterangan": "Gas inert, digunakan pada lampu neon."},
+    {"Unsur": "Li", "Nama": "Litium",       "No Atom": 3,  "Simbol": "Li", "Golongan": "Logam alkali",       "Massa Atom": 6.94,     "Keterangan": "Logam lunak, reaktif."},
+    {"Unsur": "Be", "Nama": "Berilium",     "No Atom": 4,  "Simbol": "Be", "Golongan": "Logam alkali tanah", "Massa Atom": 9.0122,   "Keterangan": "Logam keras, titik leleh tinggi."},
+    {"Unsur": "B",  "Nama": "Boron",        "No Atom": 5,  "Simbol": "B",  "Golongan": "Semilogam",           "Massa Atom": 10.81,    "Keterangan": "Semilogam dengan sifat unik."},
+    {"Unsur": "C",  "Nama": "Karbon",       "No Atom": 6,  "Simbol": "C",  "Golongan": "Non-logam",           "Massa Atom": 12.011,   "Keterangan": "Dasar kehidupan organik."},
+    {"Unsur": "N",  "Nama": "Nitrogen",     "No Atom": 7,  "Simbol": "N",  "Golongan": "Non-logam",           "Massa Atom": 14.007,   "Keterangan": "Komponen utama atmosfer."},
+    {"Unsur": "O",  "Nama": "Oksigen",      "No Atom": 8,  "Simbol": "O",  "Golongan": "Non-logam",           "Massa Atom": 15.999,   "Keterangan": "Penting untuk respirasi."},
+    {"Unsur": "F",  "Nama": "Fluorin",      "No Atom": 9,  "Simbol": "F",  "Golongan": "Halogen",             "Massa Atom": 18.998,   "Keterangan": "Gas sangat reaktif."},
+    {"Unsur": "Ne", "Nama": "Neon",         "No Atom": 10, "Simbol": "Ne", "Golongan": "Gas mulia",          "Massa Atom": 20.180,   "Keterangan": "Gas inert, digunakan dalam lampu neon."},
+    {"Unsur": "Na", "Nama": "Natrium",      "No Atom": 11, "Simbol": "Na", "Golongan": "Logam alkali",       "Massa Atom": 22.990,   "Keterangan": "Logam lunak, bereaksi keras dengan air."},
+    {"Unsur": "Mg", "Nama": "Magnesium",    "No Atom": 12, "Simbol": "Mg", "Golongan": "Logam alkali tanah", "Massa Atom": 24.305,   "Keterangan": "Berperan dalam klorofil tanaman."},
+    {"Unsur": "Al", "Nama": "Aluminium",    "No Atom": 13, "Simbol": "Al", "Golongan": "Logam pasca transisi", "Massa Atom": 26.982, "Keterangan": "Ringan dan anti karat."},
+    {"Unsur": "Si", "Nama": "Silikon",      "No Atom": 14, "Simbol": "Si", "Golongan": "Semilogam",           "Massa Atom": 28.085,   "Keterangan": "Penting dalam semikonduktor elektronik."},
+    {"Unsur": "P",  "Nama": "Fosfor",       "No Atom": 15, "Simbol": "P",  "Golongan": "Non-logam",           "Massa Atom": 30.974,   "Keterangan": "Digunakan dalam pupuk."},
+    {"Unsur": "S",  "Nama": "Belerang",     "No Atom": 16, "Simbol": "S",  "Golongan": "Non-logam",           "Massa Atom": 32.06,    "Keterangan": "Digunakan dalam produksi asam sulfat."},
+    {"Unsur": "Cl", "Nama": "Klorin",       "No Atom": 17, "Simbol": "Cl", "Golongan": "Halogen",             "Massa Atom": 35.45,    "Keterangan": "Sterilizer dan pemutih air."},
+    {"Unsur": "Ar", "Nama": "Argon",        "No Atom": 18, "Simbol": "Ar", "Golongan": "Gas mulia",          "Massa Atom": 39.948,   "Keterangan": "Gas inert, digunakan dalam pengelasan."},
+    {"Unsur": "K",  "Nama": "Kalium",       "No Atom": 19, "Simbol": "K",  "Golongan": "Logam alkali",       "Massa Atom": 39.098,   "Keterangan": "Elemen penting untuk fungsi saraf."},
+    {"Unsur": "Ca", "Nama": "Kalsium",      "No Atom": 20, "Simbol": "Ca", "Golongan": "Logam alkali tanah", "Massa Atom": 40.078,   "Keterangan": "Pembentuk tulang dan gigi."},
+    {"Unsur": "Sc", "Nama": "Skandium",     "No Atom": 21, "Simbol": "Sc", "Golongan": "Logam transisi",     "Massa Atom": 44.956,   "Keterangan": "Digunakan pada lampu lampu halida logam."},
+    {"Unsur": "Ti", "Nama": "Titanium",     "No Atom": 22, "Simbol": "Ti", "Golongan": "Logam transisi",     "Massa Atom": 47.867,   "Keterangan": "Ringan, kuat dan anti karat."},
+    {"Unsur": "V",  "Nama": "Vanadium",     "No Atom": 23, "Simbol": "V",  "Golongan": "Logam transisi",     "Massa Atom": 50.942,   "Keterangan": "Digunakan dalam paduan logam."},
+    {"Unsur": "Cr", "Nama": "Kromium",      "No Atom": 24, "Simbol": "Cr", "Golongan": "Logam transisi",     "Massa Atom": 51.996,   "Keterangan": "Memberikan lapisan anti karat."},
+    {"Unsur": "Mn", "Nama": "Mangan",       "No Atom": 25, "Simbol": "Mn", "Golongan": "Logam transisi",     "Massa Atom": 54.938,   "Keterangan": "Digunakan dalam baja tuang."},
+    {"Unsur": "Fe", "Nama": "Besi",         "No Atom": 26, "Simbol": "Fe", "Golongan": "Logam transisi",     "Massa Atom": 55.845,   "Keterangan": "Elemen logam yang umum pada baja."},
+    {"Unsur": "Co", "Nama": "Kobalt",       "No Atom": 27, "Simbol": "Co", "Golongan": "Logam transisi",     "Massa Atom": 58.933,   "Keterangan": "Digunakan dalam baterai dan magnet."},
+    {"Unsur": "Ni", "Nama": "Nikel",        "No Atom": 28, "Simbol": "Ni", "Golongan": "Logam transisi",     "Massa Atom": 58.693,   "Keterangan": "Sering dipakai untuk pelapis anti karat."},
+    {"Unsur": "Cu", "Nama": "Tembaga",      "No Atom": 29, "Simbol": "Cu", "Golongan": "Logam transisi",     "Massa Atom": 63.546,   "Keterangan": "Konduktor listrik yang baik."},
+    {"Unsur": "Zn", "Nama": "Seng",         "No Atom": 30, "Simbol": "Zn", "Golongan": "Logam transisi",     "Massa Atom": 65.38,    "Keterangan": "Digunakan sebagai pelindung baja dari karat."}
+]
+
+df_periodic = pd.DataFrame(periodic_data)
 
 # -- Tab 4 --
 with tab4:
