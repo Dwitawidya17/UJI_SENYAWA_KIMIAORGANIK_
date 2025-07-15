@@ -166,7 +166,7 @@ with tab3:
     soal_kuis = st.session_state["soal_kuis"]
     opsi_kuis = st.session_state["opsi_kuis"]
 
-    st.markdown("Jawab semua soal terlebih dahulu, lalu klik Submit Jawaban Semua.")
+    st.markdown("Jawab semua soal terlebih dahulu, lalu klik Submit Jawaban.")
 
     jawaban_pengguna = {}
     for i, soal in enumerate(soal_kuis, 1):
@@ -175,7 +175,7 @@ with tab3:
         jawaban = st.radio("Pilih Golongan:", opsi, key=f"kuis_{i}")
         jawaban_pengguna[f"soal_{i}"] = {"jawaban": jawaban, "benar": soal["Golongan"]}
 
-    if st.button("📤 Submit Jawaban Semua"):
+    if st.button("📤 Submit Jawaban"):
         benar = sum(1 for k in jawaban_pengguna if jawaban_pengguna[k]["jawaban"] == jawaban_pengguna[k]["benar"])
         skor = (benar / jumlah_soal) * 100
 
