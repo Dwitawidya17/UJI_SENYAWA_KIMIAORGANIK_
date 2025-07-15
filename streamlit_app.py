@@ -89,8 +89,6 @@ st.set_page_config(page_title="Uji Golongan Senyawa", layout="wide")
 st.title("🧪 Uji Golongan Senyawa Kimia - Interaktif")
 
 st.markdown("Pilih *golongan senyawa* untuk melihat jenis uji, hasil positif, dan prinsip reaksinya.")
-
-# Tampilan dropdown + hasil uji
 golongan = st.selectbox("🔍 Pilih Golongan Senyawa", list(senyawa_data.keys()))
 st.subheader(f"📋 Hasil Uji untuk: {golongan}")
 for uji in senyawa_data[golongan]:
@@ -98,17 +96,17 @@ for uji in senyawa_data[golongan]:
         st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
         st.markdown(f"*Keterangan:* {uji['Keterangan']}")
 
-# ===================== KUIS 5 SOAL PILIHAN GANDA =====================
+# ===================== KUIS 15 SOAL PILIHAN GANDA =====================
 st.markdown("---")
-st.subheader("🧠 Kuis Pilihan Ganda (5 Soal Acak)")
+st.subheader("🧠 Kuis Pilihan Ganda (15 Soal Acak)")
 
-# Gabungkan semua uji
 semua_uji = []
 for gol, daftar_uji in senyawa_data.items():
     for u in daftar_uji:
         semua_uji.append({**u, "Golongan": gol})
 
-soal_kuis = random.sample(semua_uji, k=5)
+jumlah_soal = min(15, len(semua_uji))  # Maksimal 15 soal
+soal_kuis = random.sample(semua_uji, k=jumlah_soal)
 
 for i, soal in enumerate(soal_kuis, 1):
     st.markdown(f"*Soal {i}:*")
@@ -130,4 +128,4 @@ st.subheader("💡 Fakta Menarik Kimia")
 st.info(random.choice(fakta_menarik))
 
 st.markdown("---")
-st.caption("© 2025 | Uji Senyawa Kimia • Edukasi Kimia Interaktif by Streamlit 🎓")
+st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
