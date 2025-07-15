@@ -84,63 +84,69 @@ fakta_menarik = [
     "🔬 Biuret test hanya positif jika terdapat dua atau lebih ikatan peptida.",
 ]
 
-# ===================== TAMPILAN STREAMLIT =====================
-st.set_page_config(page_title="Uji Golongan Senyawa", layout="wide")
-st.title("🧪 Uji Golongan Senyawa Kimia - Interaktif")
+# ===================== STREAMLIT CONFIG =====================
+st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
 
-st.markdown("Pilih *golongan senyawa* untuk melihat jenis uji, hasil positif, dan prinsip reaksinya.")
-golongan = st.selectbox("🔍 Pilih Golongan Senyawa", list(senyawa_data.keys()))
-st.subheader(f"📋 Hasil Uji untuk: {golongan}")
-for uji in senyawa_data[golongan]:
-    with st.expander(uji["Nama Uji"]):
-        st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
-        st.markdown(f"*Keterangan:* {uji['Keterangan']}")
+# ===================== TABS =====================
+tab1, tab2 = st.tabs(["🔍 Uji Senyawa", "🧠 Kuis Kimia"])
 
-# ===================== KUIS: 15 SOAL =====================
-st.markdown("---")
-st.subheader("🧠 Kuis Pilihan Ganda (15 Soal Sekaligus)")
+# ===================== TAB 1: UJI SENYAWA =====================
+with tab1:
+    st.title("🔬 Uji Golongan Senyawa Kimia")
+    st.markdown("Pilih golongan senyawa untuk melihat uji reaksi, hasil positif, dan penjelasannya.")
 
-semua_uji = []
-for gol, daftar_uji in senyawa_data.items():
-    for u in daftar_uji:
-        semua_uji.append({**u, "Golongan": gol})
+    golongan = st.selectbox("Pilih Golongan Senyawa", list(senyawa_data.keys()))
+    st.subheader(f"📋 Hasil Uji untuk: {golongan}")
+    for uji in senyawa_data[golongan]:
+        with st.expander(uji["Nama Uji"]):
+            st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
+            st.markdown(f"*Keterangan:* {uji['Keterangan']}")
 
-jumlah_soal = min(15, len(semua_uji))
-soal_kuis = random.sample(semua_uji, k=jumlah_soal)
+# ===================== TAB 2: KUIS KIMIA =====================
+with tab2:
+    st.title("🧠 Kuis Golongan Senyawa")
+    semua_uji = []
+    for gol, daftar_uji in senyawa_data.items():
+        for u in daftar_uji:
+            semua_uji.append({**u, "Golongan": gol})
 
-jawaban_pengguna = {}
-for i, soal in enumerate(soal_kuis, 1):
-    st.markdown(f"*Soal {i}:*")
-    st.markdown(f"{soal['Nama Uji']} → Hasil: {soal['Hasil Positif']}")
-    opsi = random.sample(list(senyawa_data.keys()), 4)
-    if soal["Golongan"] not in opsi:
-        opsi[0] = soal["Golongan"]
-    random.shuffle(opsi)
-    jawaban = st.radio("Pilih Golongan:", opsi, key=f"soal_{i}")
-    jawaban_pengguna[f"soal_{i}"] = {"jawaban": jawaban, "benar": soal["Golongan"]}
+    jumlah_soal = min(15, len(semua_uji))
+    soal_kuis = random.sample(semua_uji, k=jumlah_soal)
 
-# Tombol submit semua jawaban
-if st.button("📤 Submit Jawaban Semua"):
-    benar = 0
-    salah = []
-    for key, value in jawaban_pengguna.items():
-        if value["jawaban"] == value["benar"]:
-            benar += 1
-        else:
-            salah.append((key, value["jawaban"], value["benar"]))
+    st.markdown("Jawab semua soal terlebih dahulu, lalu klik *Submit Jawaban*.")
 
-    st.success(f"🎉 Kamu menjawab {benar} dari {jumlah_soal} soal dengan benar.")
-    st.info(f"💯 Skor akhir: *{(benar/jumlah_soal)*100:.2f}%*")
+    jawaban_pengguna = {}
+    for i, soal in enumerate(soal_kuis, 1):
+        st.markdown(f"*Soal {i}:*")
+        st.markdown(f"{soal['Nama Uji']} → Hasil: {soal['Hasil Positif']}")
+        opsi = random.sample(list(senyawa_data.keys()), 4)
+        if soal["Golongan"] not in opsi:
+            opsi[0] = soal["Golongan"]
+        random.shuffle(opsi)
+        jawaban = st.radio("Pilih Golongan:", opsi, key=f"kuis_{i}")
+        jawaban_pengguna[f"soal_{i}"] = {"jawaban": jawaban, "benar": soal["Golongan"]}
 
-    if salah:
-        st.warning("❌ Berikut jawaban yang salah:")
-        for s in salah:
-            st.markdown(f"- *{s[0]}: Jawabanmu **{s[1]}, seharusnya **{s[2]}*")
+    if st.button("📤 Submit Jawaban Semua"):
+        benar = 0
+        salah = []
+        for key, value in jawaban_pengguna.items():
+            if value["jawaban"] == value["benar"]:
+                benar += 1
+            else:
+                salah.append((key, value["jawaban"], value["benar"]))
 
-# ===================== FAKTA MENARIK =====================
-st.markdown("---")
-st.subheader("💡 Fakta Menarik Kimia")
-st.info(random.choice(fakta_menarik))
+        st.success(f"✅ Kamu menjawab {benar} dari {jumlah_soal} soal dengan benar.")
+        st.info(f"🎯 Skor akhir: *{(benar/jumlah_soal)*100:.2f}%*")
 
+        if salah:
+            st.warning("❌ Berikut jawaban yang salah:")
+            for s in salah:
+                st.markdown(f"- *{s[0]}: Jawabanmu **{s[1]}, seharusnya **{s[2]}*")
+
+    st.markdown("---")
+    st.subheader("💡 Fakta Menarik Kimia")
+    st.info(random.choice(fakta_menarik))
+
+# ===================== FOOTER =====================
 st.markdown("---")
 st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
