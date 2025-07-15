@@ -86,7 +86,7 @@ fakta_menarik = [
 
 # ===================== CONFIG STREAMLIT =====================
 st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
-tab1, tab2 = st.tabs(["🔍 Uji Senyawa", "🧠 Kuis Kimia"])
+tab1, tab2, tab3 = st.tabs(["🔍 Uji Senyawa", "🧠 Kuis Kimia", "Tabel Periodik"])
 
 # ===================== TAB 1: UJI SENYAWA =====================
 with tab1:
@@ -150,13 +150,8 @@ with tab2:
         st.subheader("💡 Fakta Menarik Kimia")
         st.info(random.choice(fakta_menarik))
 
-
-# ===================== FOOTER =====================
-st.markdown("---")
-st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
-
-import tkinter as tk
-
+# ===================== TAB 3: TABEL PERIODIK =====================
+with tab3:
 # Data unsur periodik: simbol => info detail
 periodic_elements = {
     "H": {
@@ -220,3 +215,7 @@ text_info = tk.Text(root, width=40, height=10, state='disabled', wrap='word')
 text_info.pack(padx=10, pady=10)
 
 root.mainloop()
+# ===================== FOOTER =====================
+st.markdown("---")
+st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
+
