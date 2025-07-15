@@ -75,6 +75,26 @@ senyawa_data = {
     ]
 }
 
+# ===================== DATA KELARUTAN, KEBASAAN, TITIK DIDIH (contoh fiktif) =====================
+senyawa_info = {
+    "Hidrokarbon": {"Kelarutan": "Tidak larut dalam air", "Kebasaan": "Netral", "Titik Didih": "Sekitar 100-250°C"},
+    "Alkohol Primer": {"Kelarutan": "Larut dalam air", "Kebasaan": "Sedikit basa", "Titik Didih": "78°C (etanol)"},
+    "Alkohol Sekunder": {"Kelarutan": "Larut dalam air", "Kebasaan": "Sedikit basa", "Titik Didih": "83°C (isopropanol)"},
+    "Alkohol Tersier": {"Kelarutan": "Kurang larut dalam air", "Kebasaan": "Netral", "Titik Didih": "82°C (tert-butanol)"},
+    "Fenol": {"Kelarutan": "Larut dalam air", "Kebasaan": "Asam lemah", "Titik Didih": "182°C"},
+    "Aldehida": {"Kelarutan": "Larut dalam air", "Kebasaan": "Netral", "Titik Didih": "20-200°C (bervariasi)"},
+    "Keton": {"Kelarutan": "Larut dalam air", "Kebasaan": "Netral", "Titik Didih": "56-160°C"},
+    "Asam Karboksilat": {"Kelarutan": "Larut dalam air", "Kebasaan": "Asam", "Titik Didih": "118°C (asam asetat)"},
+    "Amina Primer": {"Kelarutan": "Larut dalam air", "Kebasaan": "Basa", "Titik Didih": "35-120°C"},
+    "Amina Sekunder": {"Kelarutan": "Larut dalam air", "Kebasaan": "Basa", "Titik Didih": "40-130°C"},
+    "Amina Tersier": {"Kelarutan": "Kurang larut dalam air", "Kebasaan": "Basa lemah", "Titik Didih": "30-120°C"},
+    "Ester": {"Kelarutan": "Kurang larut dalam air", "Kebasaan": "Netral", "Titik Didih": "54-150°C"},
+    "Amida": {"Kelarutan": "Larut dalam air", "Kebasaan": "Sedikit basa", "Titik Didih": "165-225°C"},
+    "Karbohidrat": {"Kelarutan": "Larut dalam air", "Kebasaan": "Netral", "Titik Didih": "Tidak ada (terurai)"},
+    "Protein": {"Kelarutan": "Larut dalam air (tergantung kondisi)", "Kebasaan": "Netral sampai asam/basa tergantung jenis", "Titik Didih": "Terurai sebelum mendidih"},
+    "Lemak & Minyak": {"Kelarutan": "Tidak larut dalam air", "Kebasaan": "Netral", "Titik Didih": "200-400°C"}
+}
+
 # ===================== FAKTA MENARIK =====================
 fakta_menarik = [
     "🧴 Lemak jenuh tidak bereaksi dengan larutan Baeyer, tapi lemak tak jenuh bisa.",
@@ -86,7 +106,7 @@ fakta_menarik = [
 
 # ===================== CONFIG STREAMLIT =====================
 st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
-tab1, tab2 = st.tabs(["🔍 Uji Senyawa", "🧠 Kuis Kimia"])
+tab1, tab3, tab2 = st.tabs(["🔍 Uji Senyawa", "💧 Uji Kelarutan & Titik Didih", "🧠 Kuis Kimia"])
 
 # ===================== TAB 1: UJI SENYAWA =====================
 with tab1:
@@ -99,6 +119,18 @@ with tab1:
         with st.expander(uji["Nama Uji"]):
             st.markdown(f"Hasil Positif: {uji['Hasil Positif']}")
             st.markdown(f"Keterangan: {uji['Keterangan']}")
+
+# ===================== TAB BARU 3: UJI KELARUTAN, KEBASAAN, TITIK DIDIH =====================
+with tab3:
+    st.title("💧 Uji Kelarutan, Kebasaan, dan Titik Didih Senyawa")
+    st.markdown("Pilih golongan senyawa untuk melihat uji kelarutan, kebasaan, dan titik didihnya.")
+
+    selected_info = st.selectbox("Pilih Golongan Senyawa", list(senyawa_info.keys()))
+    info = senyawa_info[selected_info]
+    st.subheader(f"🧪 Informasi untuk: {selected_info}")
+    st.markdown(f"**Kelarutan:** {info['Kelarutan']}")
+    st.markdown(f"**Kebasaan:** {info['Kebasaan']}")
+    st.markdown(f"**Titik Didih:** {info['Titik Didih']}")
 
 # ===================== TAB 2: KUIS KIMIA =====================
 with tab2:
@@ -144,13 +176,4 @@ with tab2:
         if salah:
             st.warning("❌ Jawaban yang salah:")
             for s in salah:
-                st.markdown(f"- {s[0]}: Jawabanmu **{s[1]}, seharusnya **{s[2]}")
-
-        st.markdown("---")
-        st.subheader("💡 Fakta Menarik Kimia")
-        st.info(random.choice(fakta_menarik))
-
-
-# ===================== FOOTER =====================
-st.markdown("---")
-st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
+                st.markdown(f"- {s[0]}: Jawabanmu **{s[1]}
