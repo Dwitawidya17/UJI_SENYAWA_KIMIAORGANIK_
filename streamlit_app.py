@@ -150,11 +150,15 @@ with tab2:
         st.subheader("💡 Fakta Menarik Kimia")
         st.info(random.choice(fakta_menarik))
 
-import tkinter as tk
-from tkinter import messagebox
 
-# Data unsur periodik dalam dictionary: simbol => info
-elements = {
+# ===================== FOOTER =====================
+st.markdown("---")
+st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
+
+import tkinter as tk
+
+# Data unsur periodik: simbol => info detail
+periodic_elements = {
     "H": {
         "name": "Hydrogen",
         "atomic_number": 1,
@@ -176,16 +180,25 @@ elements = {
         "category": "Alkali Metal",
         "description": "Logam paling ringan, digunakan dalam baterai."
     },
-    # Tambahkan unsur lain sesuai kebutuhan...
+    "Be": {
+        "name": "Beryllium",
+        "atomic_number": 4,
+        "atomic_mass": 9.0122,
+        "category": "Alkaline Earth Metal",
+        "description": "Logam ringan, digunakan dalam paduan dan cermin."
+    },
+    # Tambahkan unsur lain sesukamu
 }
 
-def show_info(symbol):
-    el = elements[symbol]
-    info_text = (f"Nama: {el['name']} ({symbol})\n"
-                 f"Nomor Atom: {el['atomic_number']}\n"
-                 f"Massa Atom: {el['atomic_mass']}\n"
-                 f"Kategori: {el['category']}\n"
-                 f"Deskripsi:\n{el['description']}")
+def show_element_info(symbol):
+    el = periodic_elements[symbol]
+    info_text = (
+        f"Nama: {el['name']} ({symbol})\n"
+        f"Nomor Atom: {el['atomic_number']}\n"
+        f"Massa Atom: {el['atomic_mass']}\n"
+        f"Kategori: {el['category']}\n"
+        f"Deskripsi: {el['description']}"
+    )
     text_info.config(state='normal')
     text_info.delete(1.0, tk.END)
     text_info.insert(tk.END, info_text)
@@ -194,23 +207,16 @@ def show_info(symbol):
 root = tk.Tk()
 root.title("Tabel Periodik Interaktif")
 
-# Frame untuk tombol unsur
 frame_buttons = tk.Frame(root)
 frame_buttons.pack(padx=10, pady=10)
 
-# Buat tombol dari data unsur
-for i, symbol in enumerate(elements.keys()):
+# Buat tombol untuk setiap unsur
+for i, symbol in enumerate(periodic_elements):
     btn = tk.Button(frame_buttons, text=symbol, width=6, height=3,
-                    command=lambda s=symbol: show_info(s))
-    btn.grid(row=i//10, column=i%10, padx=3, pady=3)
+                    command=lambda s=symbol: show_element_info(s))
+    btn.grid(row=i // 10, column=i % 10, padx=5, pady=5)
 
-# Area teks untuk informasi unsur
 text_info = tk.Text(root, width=40, height=10, state='disabled', wrap='word')
 text_info.pack(padx=10, pady=10)
 
 root.mainloop()
-
-# ===================== FOOTER =====================
-st.markdown("---")
-st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
-
