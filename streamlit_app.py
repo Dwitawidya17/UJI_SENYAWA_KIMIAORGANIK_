@@ -86,12 +86,102 @@ fakta_menarik = [
 
 # ========== DATA KELARUTAN ==========
 data_senyawa = [
-    {"nama_jenis": "Etanol - Alkohol Primer", "kelarutan": "Larut dalam air, etanol, kloroform", "kebasaan": "Netral (pH ~ 7)", "titik_didih": 78.37},
-    {"nama_jenis": "Aseton - Keton", "kelarutan": "Larut dalam air dan pelarut organik", "kebasaan": "Netral (pH ~ 7)", "titik_didih": 56.05},
-    {"nama_jenis": "Asam asetat - Asam Karboksilat", "kelarutan": "Larut dalam air, etanol", "kebasaan": "Asam (pH ~ 2.4)", "titik_didih": 118.1},
-    {"nama_jenis": "NaOH - Basa Kuat", "kelarutan": "Sangat larut dalam air", "kebasaan": "Basa (pH ~ 13-14)", "titik_didih": 1390},
-    {"nama_jenis": "Benzena - Aromatik", "kelarutan": "Tidak larut dalam air, larut pelarut non-polar", "kebasaan": "Netral", "titik_didih": 80.1},
-    {"nama_jenis": "Anilin - Amine Primer", "kelarutan": "Larut sebagian dalam air, larut dalam asam", "kebasaan": "Basa lemah", "titik_didih": 184},
+    {
+        "nama_jenis": "Hidrokarbon (contoh: heksana)",
+        "kelarutan": "Tidak larut dalam air, larut dalam pelarut non-polar",
+        "kebasaan": "Netral",
+        "titik_didih": 68.7
+    },
+    {
+        "nama_jenis": "Alkohol Primer (contoh: etanol)",
+        "kelarutan": "Larut dalam air dan etanol",
+        "kebasaan": "Netral",
+        "titik_didih": 78.4
+    },
+    {
+        "nama_jenis": "Alkohol Sekunder (contoh: isopropanol)",
+        "kelarutan": "Larut dalam air dan pelarut organik",
+        "kebasaan": "Netral",
+        "titik_didih": 82.6
+    },
+    {
+        "nama_jenis": "Alkohol Tersier (contoh: tert-butanol)",
+        "kelarutan": "Larut dalam air dan etanol",
+        "kebasaan": "Netral",
+        "titik_didih": 82.2
+    },
+    {
+        "nama_jenis": "Fenol",
+        "kelarutan": "Sedikit larut dalam air, larut dalam etanol",
+        "kebasaan": "Sedikit asam (pH ~5.5)",
+        "titik_didih": 181.7
+    },
+    {
+        "nama_jenis": "Eter (contoh: dietil eter)",
+        "kelarutan": "Sedikit larut dalam air, larut dalam pelarut organik",
+        "kebasaan": "Netral",
+        "titik_didih": 34.6
+    },
+    {
+        "nama_jenis": "Aldehida (contoh: asetaldehida)",
+        "kelarutan": "Larut dalam air dan pelarut organik",
+        "kebasaan": "Netral",
+        "titik_didih": 20.2
+    },
+    {
+        "nama_jenis": "Keton (contoh: aseton)",
+        "kelarutan": "Larut dalam air dan pelarut organik",
+        "kebasaan": "Netral",
+        "titik_didih": 56.1
+    },
+    {
+        "nama_jenis": "Karbohidrat (contoh: glukosa)",
+        "kelarutan": "Sangat larut dalam air",
+        "kebasaan": "Netral",
+        "titik_didih": "Degradasi sebelum mendidih"
+    },
+    {
+        "nama_jenis": "Asam Karboksilat (contoh: asam asetat)",
+        "kelarutan": "Sangat larut dalam air dan etanol",
+        "kebasaan": "Asam (pH ~2.4)",
+        "titik_didih": 118.1
+    },
+    {
+        "nama_jenis": "Amina Primer (contoh: metilamina)",
+        "kelarutan": "Larut dalam air",
+        "kebasaan": "Basa lemah",
+        "titik_didih": -6.3
+    },
+    {
+        "nama_jenis": "Amina Sekunder (contoh: dimetilamina)",
+        "kelarutan": "Larut dalam air",
+        "kebasaan": "Basa lemah",
+        "titik_didih": 7.4
+    },
+    {
+        "nama_jenis": "Amina Tersier (contoh: trimetilamina)",
+        "kelarutan": "Larut dalam air",
+        "kebasaan": "Basa lemah",
+        "titik_didih": 3.5
+    },
+    {
+        "nama_jenis": "Amina (umum)",
+        "kelarutan": "Larut dalam air, larut dalam asam",
+        "kebasaan": "Basa lemah",
+        "titik_didih": "Bervariasi"
+    },
+    {
+        "nama_jenis": "Protein (contoh: albumin)",
+        "kelarutan": "Larut dalam air (larutan koloid)",
+        "kebasaan": "Netral hingga sedikit asam",
+        "titik_didih": "Terdenaturasi sebelum mendidih"
+    },
+    {
+        "nama_jenis": "Lemak & Minyak (contoh: trigliserida)",
+        "kelarutan": "Tidak larut dalam air, larut dalam pelarut non-polar",
+        "kebasaan": "Netral",
+        "titik_didih": ">300 (dekomposisi)"
+    }
 ]
 
 # ========== KONFIGURASI HALAMAN ==========
