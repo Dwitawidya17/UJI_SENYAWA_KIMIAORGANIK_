@@ -1,131 +1,61 @@
 import streamlit as st
+import pandas as pd
 import random
+from PIL import Image
 
-# ===================== DATA UJI SENYAWA (LENGKAP SESUAI GAMBAR) =====================
-senyawa_data = {
-    "Hidrokarbon": [
-        {"Nama Uji": "Uji Pembakaran", "Hasil Positif": "Nyala kuning berasap", "Keterangan": "Aromatik"},
-        {"Nama Uji": "Uji Bromin", "Hasil Positif": "Warna hilang", "Keterangan": "Adisi ikatan rangkap"},
-        {"Nama Uji": "Uji Baeyer", "Hasil Positif": "Warna ungu hilang jadi coklat", "Keterangan": "Ikatan rangkap"}
-    ],
-    "Alkohol Primer": [
-        {"Nama Uji": "Uji Lucas", "Hasil Positif": "Tidak keruh / lambat", "Keterangan": "Reaksi lambat dengan ZnCl₂/HCl"},
-        {"Nama Uji": "Uji Kromik (Jones)", "Hasil Positif": "Oranye → hijau", "Keterangan": "Oksidasi → asam karboksilat"},
-        {"Nama Uji": "Uji Natrium", "Hasil Positif": "Gas H₂", "Keterangan": "Reaksi alkohol"}
-    ],
-    "Alkohol Sekunder": [
-        {"Nama Uji": "Uji Lucas", "Hasil Positif": "Keruh sedang (~5 menit)", "Keterangan": "Reaksi sedang"},
-        {"Nama Uji": "Uji Kromik", "Hasil Positif": "Oranye → hijau", "Keterangan": "Oksidasi → keton"},
-        {"Nama Uji": "Uji Natrium", "Hasil Positif": "Gas H₂", "Keterangan": "Reaksi alkohol"}
-    ],
-    "Alkohol Tersier": [
-        {"Nama Uji": "Uji Lucas", "Hasil Positif": "Cepat keruh", "Keterangan": "Cepat bereaksi"},
-        {"Nama Uji": "Uji Kromik", "Hasil Positif": "Negatif", "Keterangan": "Tidak teroksidasi"},
-        {"Nama Uji": "Uji Natrium", "Hasil Positif": "Gas H₂", "Keterangan": "Reaksi alkohol"}
-    ],
-    "Fenol": [
-        {"Nama Uji": "Uji Ferri Klorida", "Hasil Positif": "Warna ungu/biru", "Keterangan": "Kompleks fenolat"},
-        {"Nama Uji": "Uji Bromin", "Hasil Positif": "Endapan putih tribromofenol", "Keterangan": "Substitusi elektrofilik"}
-    ],
-    "Aldehida": [
-        {"Nama Uji": "Uji Tollens", "Hasil Positif": "Cermin perak", "Keterangan": "Aldehida teroksidasi"},
-        {"Nama Uji": "Uji Fehling", "Hasil Positif": "Endapan merah bata", "Keterangan": "Aldehida positif"},
-        {"Nama Uji": "Uji DNP", "Hasil Positif": "Endapan kuning/jingga", "Keterangan": "Adisi nukleofilik"}
-    ],
-    "Keton": [
-        {"Nama Uji": "Uji Tollens", "Hasil Positif": "Negatif", "Keterangan": "Tidak teroksidasi"},
-        {"Nama Uji": "Uji Fehling", "Hasil Positif": "Negatif", "Keterangan": "Tidak bereaksi"},
-        {"Nama Uji": "Uji DNP", "Hasil Positif": "Endapan kuning/jingga", "Keterangan": "Gugus karbonil"}
-    ],
-    "Asam Karboksilat": [
-        {"Nama Uji": "Uji Lakmus", "Hasil Positif": "Lakmus merah", "Keterangan": "Bersifat asam"},
-        {"Nama Uji": "Uji NaHCO₃", "Hasil Positif": "Gelembung CO₂", "Keterangan": "Reaksi dengan basa lemah"}
-    ],
-    "Amina Primer": [
-        {"Nama Uji": "Uji Hinsberg", "Hasil Positif": "Larut setelah basa", "Keterangan": "Gugus -NH₂"},
-        {"Nama Uji": "Uji Lakmus", "Hasil Positif": "Lakmus biru", "Keterangan": "Bersifat basa"}
-    ],
-    "Amina Sekunder": [
-        {"Nama Uji": "Uji Hinsberg", "Hasil Positif": "Tidak larut setelah basa", "Keterangan": "Tidak membentuk garam"},
-        {"Nama Uji": "Uji Lakmus", "Hasil Positif": "Lakmus biru", "Keterangan": "Bersifat basa"}
-    ],
-    "Amina Tersier": [
-        {"Nama Uji": "Uji Hinsberg", "Hasil Positif": "Tidak bereaksi", "Keterangan": "Tidak membentuk derivat"},
-        {"Nama Uji": "Uji Lakmus", "Hasil Positif": "Lakmus biru", "Keterangan": "Bersifat basa"}
-    ],
-    "Ester": [
-        {"Nama Uji": "Uji Hidrolisis", "Hasil Positif": "Bau khas dan asam", "Keterangan": "Hidrolisis → alkohol + asam"},
-        {"Nama Uji": "Uji Lakmus", "Hasil Positif": "Lakmus tetap", "Keterangan": "Netral"}
-    ],
-    "Amida": [
-        {"Nama Uji": "Uji NaOH Panas", "Hasil Positif": "Amonia tercium", "Keterangan": "Hidrolisis amida"},
-        {"Nama Uji": "Uji Lakmus", "Hasil Positif": "Lakmus biru", "Keterangan": "Basa lemah"}
-    ],
-    "Karbohidrat": [
-        {"Nama Uji": "Uji Molisch", "Hasil Positif": "Cincin ungu", "Keterangan": "Dehidrasi → furfural"},
-        {"Nama Uji": "Uji Benedict", "Hasil Positif": "Endapan merah bata", "Keterangan": "Gula pereduksi"}
-    ],
-    "Protein": [
-        {"Nama Uji": "Uji Biuret", "Hasil Positif": "Warna ungu", "Keterangan": "Ikatan peptida"},
-        {"Nama Uji": "Uji Xantoproteat", "Hasil Positif": "Warna kuning", "Keterangan": "Gugus aromatik"}
-    ],
-    "Lemak & Minyak": [
-        {"Nama Uji": "Uji Kertas", "Hasil Positif": "Noda transparan", "Keterangan": "Ciri khas lipid"},
-        {"Nama Uji": "Uji Baeyer", "Hasil Positif": "Warna ungu hilang", "Keterangan": "Ikatan tak jenuh"}
-    ]
-}
+# Load data tabel uji
+data = pd.read_csv("data.csv")
 
-# ===================== FAKTA MENARIK =====================
-fakta_menarik = [
-    "🧴 Lemak jenuh tidak bereaksi dengan larutan Baeyer, tapi lemak tak jenuh bisa.",
-    "🧪 Fenol memberikan warna ungu dengan FeCl₃, berbeda dari alkohol biasa.",
-    "⚗ Uji Lucas membedakan alkohol primer, sekunder, dan tersier secara visual.",
-    "💨 NaHCO₃ hanya bereaksi dengan asam kuat seperti asam karboksilat.",
-    "🔬 Biuret test hanya positif jika terdapat dua atau lebih ikatan peptida.",
-]
+# Load soal kuis
+import json
+with open("kuis_data.json") as f:
+    kuis_data = json.load(f)
 
-# ===================== TAMPILAN STREAMLIT =====================
-st.set_page_config(page_title="Uji Golongan Senyawa", layout="wide")
-st.title("🧪 Uji Golongan Senyawa Kimia - Interaktif")
+st.set_page_config(
+    page_title="Uji Golongan Senyawa",
+    page_icon="🧪",
+    layout="wide",
+)
 
-st.markdown("Pilih *golongan senyawa* untuk melihat jenis uji, hasil positif, dan prinsip reaksinya.")
-golongan = st.selectbox("🔍 Pilih Golongan Senyawa", list(senyawa_data.keys()))
-st.subheader(f"📋 Hasil Uji untuk: {golongan}")
-for uji in senyawa_data[golongan]:
-    with st.expander(uji["Nama Uji"]):
-        st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
-        st.markdown(f"*Keterangan:* {uji['Keterangan']}")
+st.title("🧪 Uji Golongan Senyawa Organik")
+st.markdown("""
+Pilih golongan senyawa untuk melihat detail uji, hasil positif, dan prinsipnya.
+""")
 
-# ===================== KUIS 15 SOAL PILIHAN GANDA =====================
+# Pilihan dropdown
+golongan_list = data["Golongan Senyawa"].unique()
+golongan_pilihan = st.selectbox("Pilih Golongan Senyawa", golongan_list)
+
+# Filter data
+filtered = data[data["Golongan Senyawa"] == golongan_pilihan]
+
+# Tampilkan tabel
+st.subheader(f"Detail Uji untuk: {golongan_pilihan}")
+st.table(filtered[["Nama Uji", "Hasil Positif", "Keterangan / Prinsip"]])
+
+# Gambar struktur kimia opsional
+st.subheader("Struktur Kimia Contoh")
+struktur_path = f"images/{golongan_pilihan.lower().replace(' ', '_')}.png"
+try:
+    image = Image.open(struktur_path)
+    st.image(image, caption=f"Struktur Kimia {golongan_pilihan}")
+except FileNotFoundError:
+    st.warning("Belum ada gambar struktur.")
+
+# Kuis
+st.subheader("📝 Kuis Interaktif")
+
+soal = random.choice(kuis_data)
+st.write(f"**{soal['pertanyaan']}**")
+
+jawaban = st.radio("Pilih jawaban:", soal["opsi"])
+
+if st.button("Cek Jawaban"):
+    if jawaban == soal["jawaban_benar"]:
+        st.success("✅ Jawaban Benar!")
+    else:
+        st.error(f"❌ Jawaban Salah. Jawaban yang benar: {soal['jawaban_benar']}")
+
+# Footer
 st.markdown("---")
-st.subheader("🧠 Kuis Pilihan Ganda (15 Soal Acak)")
-
-semua_uji = []
-for gol, daftar_uji in senyawa_data.items():
-    for u in daftar_uji:
-        semua_uji.append({**u, "Golongan": gol})
-
-jumlah_soal = min(15, len(semua_uji))  # Maksimal 15 soal
-soal_kuis = random.sample(semua_uji, k=jumlah_soal)
-
-for i, soal in enumerate(soal_kuis, 1):
-    st.markdown(f"*Soal {i}:*")
-    st.markdown(f"{soal['Nama Uji']} → Hasil: {soal['Hasil Positif']}")
-    opsi = random.sample(list(senyawa_data.keys()), 4)
-    if soal["Golongan"] not in opsi:
-        opsi[0] = soal["Golongan"]
-    random.shuffle(opsi)
-    jawaban = st.radio("Pilih Golongan:", opsi, key=f"soal_{i}")
-    if st.button(f"Cek Jawaban Soal {i}", key=f"cek_{i}"):
-        if jawaban == soal["Golongan"]:
-            st.success("✅ Benar!")
-        else:
-            st.error(f"❌ Salah. Jawaban: {soal['Golongan']}")
-
-# ===================== FAKTA MENARIK =====================
-st.markdown("---")
-st.subheader("💡 Fakta Menarik Kimia")
-st.info(random.choice(fakta_menarik))
-
-st.markdown("---")
-st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
+st.caption("Aplikasi edukasi kimia - Streamlit + Python")
