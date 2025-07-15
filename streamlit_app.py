@@ -181,8 +181,6 @@ periodic_elements = {
         "atomic_mass": 9.0122,
         "category": "Alkaline Earth Metal",
         "description": "Logam ringan, digunakan dalam paduan dan cermin."
-    },
-    # Tambahkan unsur lain sesukamu
 }
 
 def show_element_info(symbol):
