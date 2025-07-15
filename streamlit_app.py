@@ -86,7 +86,7 @@ fakta_menarik = [
 
 # ===================== CONFIG STREAMLIT =====================
 st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
-tab1, tab2, tab3 = st.tabs(["🔍 Uji Senyawa", "🧠 Kuis Kimia", "Tabel Periodik"])
+tab1, tab2 = st.tabs(["🔍 Uji Senyawa", "🧠 Kuis Kimia"])
 
 # ===================== TAB 1: UJI SENYAWA =====================
 with tab1:
@@ -150,70 +150,6 @@ with tab2:
         st.subheader("💡 Fakta Menarik Kimia")
         st.info(random.choice(fakta_menarik))
 
-# ===================== TAB 3: TABEL PERIODIK =====================
-with tab3:
-    st.title("Tabel Periodik")
-# Data unsur periodik: simbol => info detail
-periodic_elements = 
-    "H": {
-        "name": "Hydrogen",
-        "atomic_number": 1,
-        "atomic_mass": 1.008,
-        "category": "Nonmetal",
-        "description": "Unsur teringan, paling melimpah di alam semesta."
-    },
-    "He": {
-        "name": "Helium",
-        "atomic_number": 2,
-        "atomic_mass": 4.0026,
-        "category": "Noble Gas",
-        "description": "Gas mulia tak berwarna, tak berbau, dan tak berasa. Paling tidak reaktif."
-    },
-    "Li": {
-        "name": "Lithium",
-        "atomic_number": 3,
-        "atomic_mass": 6.94,
-        "category": "Alkali Metal",
-        "description": "Logam paling ringan, digunakan dalam baterai."
-    },
-    "Be": {
-        "name": "Beryllium",
-        "atomic_number": 4,
-        "atomic_mass": 9.0122,
-        "category": "Alkaline Earth Metal",
-        "description": "Logam ringan, digunakan dalam paduan dan cermin."
-}
-
-def show_element_info(symbol):
-    el = periodic_elements[symbol]
-    info_text = (
-        f"Nama: {el['name']} ({symbol})\n"
-        f"Nomor Atom: {el['atomic_number']}\n"
-        f"Massa Atom: {el['atomic_mass']}\n"
-        f"Kategori: {el['category']}\n"
-        f"Deskripsi: {el['description']}"
-    )
-    text_info.config(state='normal')
-    text_info.delete(1.0, tk.END)
-    text_info.insert(tk.END, info_text)
-    text_info.config(state='disabled')
-
-root = tk.Tk()
-root.title("Tabel Periodik Interaktif")
-
-frame_buttons = tk.Frame(root)
-frame_buttons.pack(padx=10, pady=10)
-
-# Buat tombol untuk setiap unsur
-for i, symbol in enumerate(periodic_elements):
-    btn = tk.Button(frame_buttons, text=symbol, width=6, height=3,
-                    command=lambda s=symbol: show_element_info(s))
-    btn.grid(row=i // 10, column=i % 10, padx=5, pady=5)
-
-text_info = tk.Text(root, width=40, height=10, state='disabled', wrap='word')
-text_info.pack(padx=10, pady=10)
-
-root.mainloop()
 # ===================== FOOTER =====================
 st.markdown("---")
 st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
