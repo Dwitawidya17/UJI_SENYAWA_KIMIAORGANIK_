@@ -84,26 +84,6 @@ fakta_menarik = [
     "🔬 Biuret test hanya positif jika terdapat dua atau lebih ikatan peptida.",
 ]
 
-# ===================== TABEL PERIODIK SEDERHANA =====================
-tabel_periodik = [
-    {"No": 1, "Simbol": "H", "Nama": "Hidrogen", "Golongan": "Non-logam"},
-    {"No": 2, "Simbol": "He", "Nama": "Helium", "Golongan": "Gas mulia"},
-    {"No": 6, "Simbol": "C", "Nama": "Karbon", "Golongan": "Non-logam"},
-    {"No": 7, "Simbol": "N", "Nama": "Nitrogen", "Golongan": "Non-logam"},
-    {"No": 8, "Simbol": "O", "Nama": "Oksigen", "Golongan": "Non-logam"},
-    {"No": 11, "Simbol": "Na", "Nama": "Natrium", "Golongan": "Logam alkali"},
-    {"No": 12, "Simbol": "Mg", "Nama": "Magnesium", "Golongan": "Logam alkali tanah"},
-    {"No": 17, "Simbol": "Cl", "Nama": "Klorin", "Golongan": "Halogen"},
-    {"No": 19, "Simbol": "K", "Nama": "Kalium", "Golongan": "Logam alkali"},
-    {"No": 26, "Simbol": "Fe", "Nama": "Besi", "Golongan": "Logam transisi"},
-    {"No": 29, "Simbol": "Cu", "Nama": "Tembaga", "Golongan": "Logam transisi"},
-    {"No": 35, "Simbol": "Br", "Nama": "Bromin", "Golongan": "Halogen"},
-    {"No": 53, "Simbol": "I", "Nama": "Iodin", "Golongan": "Halogen"},
-    {"No": 80, "Simbol": "Hg", "Nama": "Raksa", "Golongan": "Logam transisi"},
-    {"No": 82, "Simbol": "Pb", "Nama": "Timbal", "Golongan": "Logam pasca-transisi"},
-]
-df_periodik = pd.DataFrame(tabel_periodik)
-
 # ===================== CONFIG STREAMLIT =====================
 st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
 tab1, tab2, tab3 = st.tabs(["🔍 Uji Senyawa", "🧠 Kuis Kimia", "🧪 Tabel Periodik"])
@@ -111,7 +91,6 @@ tab1, tab2, tab3 = st.tabs(["🔍 Uji Senyawa", "🧠 Kuis Kimia", "🧪 Tabel P
 # ===================== TAB 1: UJI SENYAWA =====================
 with tab1:
     st.title("🔬 Uji Golongan Senyawa Kimia")
-    st.markdown("Pilih golongan senyawa untuk melihat jenis uji, hasil positif, dan keterangannya.")
     selected = st.selectbox("Pilih Golongan Senyawa", list(senyawa_data.keys()))
     st.subheader(f"📋 Hasil Uji untuk: {selected}")
     for uji in senyawa_data[selected]:
@@ -126,8 +105,8 @@ with tab2:
     for gol, daftar_uji in senyawa_data.items():
         for uji in daftar_uji:
             semua_uji.append({**uji, "Golongan": gol})
-
     jumlah_soal = min(15, len(semua_uji))
+
     if "soal_kuis" not in st.session_state:
         st.session_state["soal_kuis"] = random.sample(semua_uji, k=jumlah_soal)
         st.session_state["opsi_kuis"] = []
@@ -138,14 +117,10 @@ with tab2:
             random.shuffle(opsi)
             st.session_state["opsi_kuis"].append(opsi)
 
-    soal_kuis = st.session_state["soal_kuis"]
-    opsi_kuis = st.session_state["opsi_kuis"]
-    st.markdown("Jawab semua soal terlebih dahulu, lalu klik *Submit Jawaban Semua*.")
-
     jawaban_pengguna = {}
-    for i, soal in enumerate(soal_kuis, 1):
+    for i, soal in enumerate(st.session_state["soal_kuis"], 1):
         st.markdown(f"*Soal {i}:* {soal['Nama Uji']} → Hasil: {soal['Hasil Positif']}")
-        opsi = opsi_kuis[i - 1]
+        opsi = st.session_state["opsi_kuis"][i - 1]
         jawaban = st.radio("Pilih Golongan:", opsi, key=f"kuis_{i}")
         jawaban_pengguna[f"soal_{i}"] = {"jawaban": jawaban, "benar": soal["Golongan"]}
 
@@ -154,13 +129,11 @@ with tab2:
         skor = (benar / jumlah_soal) * 100
         st.success(f"✅ Kamu menjawab {benar} dari {jumlah_soal} soal dengan benar.")
         st.info(f"🎯 Skor akhir: *{skor:.2f}%*")
-
         salah = [(k, v["jawaban"], v["benar"]) for k, v in jawaban_pengguna.items() if v["jawaban"] != v["benar"]]
         if salah:
             st.warning("❌ Jawaban yang salah:")
             for s in salah:
                 st.markdown(f"- *{s[0]}: Jawabanmu **{s[1]}, seharusnya **{s[2]}*")
-
         st.markdown("---")
         st.subheader("💡 Fakta Menarik Kimia")
         st.info(random.choice(fakta_menarik))
@@ -173,10 +146,29 @@ with tab2:
 # ===================== TAB 3: TABEL PERIODIK =====================
 with tab3:
     st.title("🧪 Tabel Periodik Unsur Kimia")
-    st.markdown("Berikut ini adalah tabel unsur-unsur kimia sederhana:")
-    st.dataframe(df_periodik, use_container_width=True)
-    st.markdown("> Untuk versi lengkap & interaktif: [ptable.com](https://ptable.com)")
+
+    tabel_periodik = [
+        ["H", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "He"],
+        ["Li", "Be", "", "", "", "", "", "", "", "", "", "", "B", "C", "N", "O", "F", "Ne"],
+        ["Na", "Mg", "", "", "", "", "", "", "", "", "", "", "Al", "Si", "P", "S", "Cl", "Ar"],
+        ["K", "Ca", "Sc", "Ti", "V", "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br", "Kr"],
+        ["Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe"],
+        ["Cs", "Ba", "La*", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn"],
+        ["Fr", "Ra", "Ac*", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"],
+        ["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""],
+        ["", "", "", "", "", "", "", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er"],
+        ["", "", "", "", "", "", "", "Tm", "Yb", "Lu", "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk"],
+        ["", "", "", "", "", "", "", "Cf", "Es", "Fm", "Md", "No", "Lr", "", "", "", "", ""]
+    ]
+
+    for row in tabel_periodik:
+        cols = st.columns(len(row))
+        for i, elem in enumerate(row):
+            if elem:
+                cols[i].markdown(f"<div style='text-align:center; border:1px solid #999; border-radius:6px; padding:4px; background-color:#f0f0f0'>{elem}</div>", unsafe_allow_html=True)
+            else:
+                cols[i].markdown("")
 
 # ===================== FOOTER =====================
 st.markdown("---")
-st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
+st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
