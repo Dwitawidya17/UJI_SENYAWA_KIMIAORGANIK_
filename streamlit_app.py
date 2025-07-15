@@ -89,25 +89,25 @@ data_senyawa = [
     {
         "nama_jenis": "Hidrokarbon (contoh: heksana)",
         "kelarutan": "Tidak larut dalam air, larut dalam pelarut non-polar",
-        "kebasaan": "Netral",
+        "kebasaan": "Netral (pH ~7)",
         "titik_didih": 68.7
     },
     {
         "nama_jenis": "Alkohol Primer (contoh: etanol)",
         "kelarutan": "Larut dalam air dan etanol",
-        "kebasaan": "Netral",
+        "kebasaan": "Netral (pH ~7)",
         "titik_didih": 78.4
     },
     {
         "nama_jenis": "Alkohol Sekunder (contoh: isopropanol)",
         "kelarutan": "Larut dalam air dan pelarut organik",
-        "kebasaan": "Netral",
+        "kebasaan": "Netral (pH ~7)",
         "titik_didih": 82.6
     },
     {
         "nama_jenis": "Alkohol Tersier (contoh: tert-butanol)",
         "kelarutan": "Larut dalam air dan etanol",
-        "kebasaan": "Netral",
+        "kebasaan": "Netral (pH ~7)",
         "titik_didih": 82.2
     },
     {
@@ -119,70 +119,71 @@ data_senyawa = [
     {
         "nama_jenis": "Eter (contoh: dietil eter)",
         "kelarutan": "Sedikit larut dalam air, larut dalam pelarut organik",
-        "kebasaan": "Netral",
+        "kebasaan": "Netral (pH ~7)",
         "titik_didih": 34.6
     },
     {
         "nama_jenis": "Aldehida (contoh: asetaldehida)",
         "kelarutan": "Larut dalam air dan pelarut organik",
-        "kebasaan": "Netral",
+        "kebasaan": "Netral (pH ~7)",
         "titik_didih": 20.2
     },
     {
         "nama_jenis": "Keton (contoh: aseton)",
         "kelarutan": "Larut dalam air dan pelarut organik",
-        "kebasaan": "Netral",
+        "kebasaan": "Netral (pH ~7)",
         "titik_didih": 56.1
     },
     {
         "nama_jenis": "Karbohidrat (contoh: glukosa)",
         "kelarutan": "Sangat larut dalam air",
-        "kebasaan": "Netral",
-        "titik_didih": "Degradasi sebelum mendidih"
+        "kebasaan": "Netral (pH ~7)",
+        "titik_didih": "Terurai sebelum mendidih"
     },
     {
         "nama_jenis": "Asam Karboksilat (contoh: asam asetat)",
         "kelarutan": "Sangat larut dalam air dan etanol",
-        "kebasaan": "Asam (pH ~2.4)",
+        "kebasaan": "Asam (pH ~2–4)",
         "titik_didih": 118.1
     },
     {
         "nama_jenis": "Amina Primer (contoh: metilamina)",
         "kelarutan": "Larut dalam air",
-        "kebasaan": "Basa lemah",
+        "kebasaan": "Basa lemah (pH ~10–11)",
         "titik_didih": -6.3
     },
     {
         "nama_jenis": "Amina Sekunder (contoh: dimetilamina)",
         "kelarutan": "Larut dalam air",
-        "kebasaan": "Basa lemah",
+        "kebasaan": "Basa lemah (pH ~10–11)",
         "titik_didih": 7.4
     },
     {
         "nama_jenis": "Amina Tersier (contoh: trimetilamina)",
         "kelarutan": "Larut dalam air",
-        "kebasaan": "Basa lemah",
+        "kebasaan": "Basa lemah (pH ~10–11)",
         "titik_didih": 3.5
     },
     {
         "nama_jenis": "Amina (umum)",
         "kelarutan": "Larut dalam air, larut dalam asam",
-        "kebasaan": "Basa lemah",
+        "kebasaan": "Basa lemah (pH ~9–11)",
         "titik_didih": "Bervariasi"
     },
     {
         "nama_jenis": "Protein (contoh: albumin)",
         "kelarutan": "Larut dalam air (larutan koloid)",
-        "kebasaan": "Netral hingga sedikit asam",
+        "kebasaan": "Netral–sedikit asam (pH ~6–7)",
         "titik_didih": "Terdenaturasi sebelum mendidih"
     },
     {
         "nama_jenis": "Lemak & Minyak (contoh: trigliserida)",
         "kelarutan": "Tidak larut dalam air, larut dalam pelarut non-polar",
-        "kebasaan": "Netral",
+        "kebasaan": "Netral (pH ~7)",
         "titik_didih": ">300 (dekomposisi)"
     }
 ]
+
 
 # ========== KONFIGURASI HALAMAN ==========
 st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
