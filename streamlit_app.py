@@ -125,8 +125,11 @@ data_senyawa = [
 ]
 
 # ========== KONFIGURASI HALAMAN ==========
-st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
-tab1, tab2 = st.tabs(["🔍 Uji Senyawa", "📊 Kelarutan, Kebasaan & Titik Didih"]), tab3 = st.tabs(["QUIZ GOLONGAN SENYAWA KIMIA"])
+tab1, tab2, tab3 = st.tabs([
+    "🔍 Uji Senyawa",
+    "📊 Kelarutan, Kebasaan & Titik Didih",
+    "🧠 Quiz Golongan Senyawa"
+])
 
 # ========== TAB 1: UJI SENYAWA ==========
 with tab1:
