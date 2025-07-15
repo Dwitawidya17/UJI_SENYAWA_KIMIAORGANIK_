@@ -87,4 +87,11 @@ if answer:
 
 # Footer
 st.markdown("---")
-st.markdown("🧬 Dibuat dengan ❤ menggunakan Streamlit")
+st.markdown("🧬 Dibuat dengan ❤ menggunakan Streamlit")uji_senyawa_app/
+│
+├── app.py
+├── images/
+│   ├── struktur1.png
+│   ├── struktur2.png
+│   └── struktur3.png
+└── requirements.txt
