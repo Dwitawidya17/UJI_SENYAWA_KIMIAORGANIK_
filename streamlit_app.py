@@ -114,7 +114,7 @@ with tab2:
     jumlah_soal = min(15, len(semua_uji))
     soal_kuis = random.sample(semua_uji, k=jumlah_soal)
 
-    st.markdown("Jawab semua soal terlebih dahulu, lalu klik *Submit Jawaban Semua*.")
+    st.markdown("Tampilkan soal satu persatu dan belum diisi, lalu klik *Submit Jawaban Semua*.")
 
     jawaban_pengguna = {}
     for i, soal in enumerate(soal_kuis, 1):
