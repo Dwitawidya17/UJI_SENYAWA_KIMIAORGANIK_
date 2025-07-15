@@ -84,54 +84,26 @@ fakta_menarik = [
     "🔬 Biuret test hanya positif jika terdapat dua atau lebih ikatan peptida.",
 ]
 
-# ========== DATA KELARUTAN, KEBASEAN, TITIK DIDIH ==========
+# ========== DATA KELARUTAN ==========
 data_senyawa = [
-    {
-        "nama_jenis": "Etanol - Alkohol Primer",
-        "kelarutan": "Larut dalam air, etanol, kloroform",
-        "kebasaan": "Netral (pH ~ 7)",
-        "titik_didih": 78.37
-    },
-    {
-        "nama_jenis": "Aseton - Keton",
-        "kelarutan": "Larut dalam air dan pelarut organik",
-        "kebasaan": "Netral (pH ~ 7)",
-        "titik_didih": 56.05
-    },
-    {
-        "nama_jenis": "Asam asetat - Asam Karboksilat",
-        "kelarutan": "Larut dalam air, etanol",
-        "kebasaan": "Asam (pH ~ 2.4)",
-        "titik_didih": 118.1
-    },
-    {
-        "nama_jenis": "NaOH - Basa Kuat",
-        "kelarutan": "Sangat larut dalam air",
-        "kebasaan": "Basa (pH ~ 13-14)",
-        "titik_didih": 1390
-    },
-    {
-        "nama_jenis": "Benzena - Aromatik",
-        "kelarutan": "Tidak larut dalam air, larut pelarut non-polar",
-        "kebasaan": "Netral",
-        "titik_didih": 80.1
-    },
-    {
-        "nama_jenis": "Anilin - Amine Primer",
-        "kelarutan": "Larut sebagian dalam air, larut dalam asam",
-        "kebasaan": "Basa lemah",
-        "titik_didih": 184
-    }
+    {"nama_jenis": "Etanol - Alkohol Primer", "kelarutan": "Larut dalam air, etanol, kloroform", "kebasaan": "Netral (pH ~ 7)", "titik_didih": 78.37},
+    {"nama_jenis": "Aseton - Keton", "kelarutan": "Larut dalam air dan pelarut organik", "kebasaan": "Netral (pH ~ 7)", "titik_didih": 56.05},
+    {"nama_jenis": "Asam asetat - Asam Karboksilat", "kelarutan": "Larut dalam air, etanol", "kebasaan": "Asam (pH ~ 2.4)", "titik_didih": 118.1},
+    {"nama_jenis": "NaOH - Basa Kuat", "kelarutan": "Sangat larut dalam air", "kebasaan": "Basa (pH ~ 13-14)", "titik_didih": 1390},
+    {"nama_jenis": "Benzena - Aromatik", "kelarutan": "Tidak larut dalam air, larut pelarut non-polar", "kebasaan": "Netral", "titik_didih": 80.1},
+    {"nama_jenis": "Anilin - Amine Primer", "kelarutan": "Larut sebagian dalam air, larut dalam asam", "kebasaan": "Basa lemah", "titik_didih": 184},
 ]
 
 # ========== KONFIGURASI HALAMAN ==========
+st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
+
 tab1, tab2, tab3 = st.tabs([
     "🔍 Uji Senyawa",
     "📊 Kelarutan, Kebasaan & Titik Didih",
     "🧠 Quiz Golongan Senyawa"
 ])
 
-# ========== TAB 1: UJI SENYAWA ==========
+# ========== TAB 1 ==========
 with tab1:
     st.title("🔬 Uji Golongan Senyawa Kimia")
     st.markdown("Pilih golongan senyawa untuk melihat jenis uji, hasil positif, dan keterangannya.")
@@ -144,7 +116,7 @@ with tab1:
             st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
             st.markdown(f"*Keterangan:* {uji['Keterangan']}")
 
-# ========== TAB 2: KELARUTAN, KEBASEAN, TITIK DIDIH ==========
+# ========== TAB 2 ==========
 with tab2:
     st.title("📊 Data Kelarutan, Kebasaan, dan Titik Didih Senyawa")
 
@@ -171,12 +143,9 @@ with tab2:
             st.write(f"{s['titik_didih']} °C")
             st.write("---")
 
-# ========== TAB 3: QUIZ GOLONGAN SENYAWA KIMIA ==========
-    with tab3:
-    # Quiz interaktif
-    st.markdown("---")
+# ========== TAB 3 ==========
+with tab3:
     st.title("🧠 Kuis Golongan Senyawa Kimia")
-
     semua_uji = []
     for golongan, daftar_uji in senyawa_data.items():
         for uji in daftar_uji:
@@ -201,7 +170,7 @@ with tab2:
 
     jawaban_pengguna = {}
     for i, soal in enumerate(soal_kuis, 1):
-        st.markdown(f"Soal {i}: {soal['Nama Uji']} → Hasil: {soal['Hasil Positif']}")
+        st.markdown(f"Soal {i}: **{soal['Nama Uji']}** → Hasil: *{soal['Hasil Positif']}*")
         opsi = opsi_kuis[i - 1]
         jawaban = st.radio("Pilih Golongan:", opsi, key=f"kuis_{i}")
         jawaban_pengguna[f"soal_{i}"] = {"jawaban": jawaban, "benar": soal["Golongan"]}
@@ -217,7 +186,7 @@ with tab2:
         if salah:
             st.warning("❌ Jawaban yang salah:")
             for s in salah:
-                st.markdown(f"- {s[0]}: Jawabanmu **{s[1]}, seharusnya **{s[2]}")
+                st.markdown(f"- {s[0]}: Jawabanmu **{s[1]}**, seharusnya **{s[2]}**")
 
         st.markdown("---")
         st.subheader("💡 Fakta Menarik Kimia")
@@ -225,4 +194,4 @@ with tab2:
 
 # ========== FOOTER ==========
 st.markdown("---")
-st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
+st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
