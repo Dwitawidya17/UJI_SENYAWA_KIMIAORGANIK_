@@ -141,6 +141,35 @@ with tab1:
             st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
             st.markdown(f"*Keterangan:* {uji['Keterangan']}")
 
+# ========== TAB 2: KELARUTAN, KEBASEAN, TITIK DIDIH ==========
+with tab2:
+    st.title("📊 Data Kelarutan, Kebasaan, dan Titik Didih Senyawa")
+
+    tab_kel, tab_pH, tab_td = st.tabs(["Uji Kelarutan", "Kebasaan (pH)", "Titik Didih"])
+
+    with tab_kel:
+        st.header("Uji Kelarutan Senyawa")
+        for s in data_senyawa:
+            st.subheader(s["nama_jenis"])
+            st.write(s["kelarutan"])
+            st.write("---")
+
+    with tab_pH:
+        st.header("Kebasaan Senyawa (pH)")
+        for s in data_senyawa:
+            st.subheader(s["nama_jenis"])
+            st.write(s["kebasaan"])
+            st.write("---")
+
+    with tab_td:
+        st.header("Titik Didih Senyawa (°C)")
+        for s in data_senyawa:
+            st.subheader(s["nama_jenis"])
+            st.write(f"{s['titik_didih']} °C")
+            st.write("---")
+
+# ========== TAB 3: QUIZ GOLONGAN SENYAWA KIMIA ==========
+    with tab3:
     # Quiz interaktif
     st.markdown("---")
     st.title("🧠 Kuis Golongan Senyawa Kimia")
@@ -190,34 +219,6 @@ with tab1:
         st.markdown("---")
         st.subheader("💡 Fakta Menarik Kimia")
         st.info(random.choice(fakta_menarik))
-
-
-# ========== TAB 2: KELARUTAN, KEBASEAN, TITIK DIDIH ==========
-with tab2:
-    st.title("📊 Data Kelarutan, Kebasaan, dan Titik Didih Senyawa")
-
-    tab_kel, tab_pH, tab_td = st.tabs(["Uji Kelarutan", "Kebasaan (pH)", "Titik Didih"])
-
-    with tab_kel:
-        st.header("Uji Kelarutan Senyawa")
-        for s in data_senyawa:
-            st.subheader(s["nama_jenis"])
-            st.write(s["kelarutan"])
-            st.write("---")
-
-    with tab_pH:
-        st.header("Kebasaan Senyawa (pH)")
-        for s in data_senyawa:
-            st.subheader(s["nama_jenis"])
-            st.write(s["kebasaan"])
-            st.write("---")
-
-    with tab_td:
-        st.header("Titik Didih Senyawa (°C)")
-        for s in data_senyawa:
-            st.subheader(s["nama_jenis"])
-            st.write(f"{s['titik_didih']} °C")
-            st.write("---")
 
 # ========== FOOTER ==========
 st.markdown("---")
