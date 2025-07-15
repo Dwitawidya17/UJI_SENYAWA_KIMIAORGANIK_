@@ -1,6 +1,5 @@
 import streamlit as st
 import random
-import pandas as pd
 
 # ===================== DATA UJI SENYAWA =====================
 senyawa_data = {
