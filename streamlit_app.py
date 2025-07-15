@@ -1,6 +1,26 @@
 import streamlit as st
 import random
 
+# ========== DATA PENGERTIAN GOLONGAN SENYAWA ==========
+pengertian_senyawa = [
+    {"Golongan": "Hidrokarbon", "Pengertian": "Senyawa organik yang hanya terdiri dari karbon (C) dan hidrogen (H). Dibagi menjadi: Alkana (jenuh), Alkena (tak jenuh dengan ikatan rangkap dua), Alkuna (ikatan rangkap tiga), Aromatik (cincin benzena)."},
+    {"Golongan": "Alkohol Primer", "Pengertian": "OH terikat pada karbon yang hanya terhubung ke satu atom C lain (contoh: etanol)."},
+    {"Golongan": "Alkohol Sekunder", "Pengertian": "OH terikat pada karbon yang terhubung ke dua atom C lain (contoh: isopropanol)."},
+    {"Golongan": "Alkohol Tersier", "Pengertian": "OH terikat pada karbon yang terhubung ke tiga atom C lain (contoh: tert-butanol)."},
+    {"Golongan": "Fenol", "Pengertian": "Senyawa aromatik dengan gugus -OH langsung terikat pada cincin benzena. Lebih asam dari alkohol biasa."},
+    {"Golongan": "Eter", "Pengertian": "Senyawa dengan struktur R-O-R′, di mana R dan R′ adalah gugus alkil atau aril. Tidak memiliki gugus -OH bebas."},
+    {"Golongan": "Aldehida", "Pengertian": "Mengandung gugus karbonil (C=O) di ujung rantai karbon, yaitu -CHO. Contoh: formaldehida."},
+    {"Golongan": "Keton", "Pengertian": "Mengandung gugus karbonil (C=O) di tengah rantai karbon, bukan di ujung. Contoh: aseton."},
+    {"Golongan": "Karbohidrat", "Pengertian": "Senyawa organik dengan rumus umum Cₙ(H₂O)ₙ. Contoh: glukosa, fruktosa. Sumber energi."},
+    {"Golongan": "Asam Karboksilat", "Pengertian": "Mengandung gugus -COOH. Bersifat asam dan dapat membentuk garam atau ester. Contoh: asam asetat."},
+    {"Golongan": "Amina Primer", "Pengertian": "Satu gugus alkil/aril terikat pada nitrogen (R-NH₂)."},
+    {"Golongan": "Amina Sekunder", "Pengertian": "Dua gugus alkil/aril terikat pada nitrogen (R₂NH)."},
+    {"Golongan": "Amina Tersier", "Pengertian": "Tiga gugus alkil/aril terikat pada nitrogen (R₃N)."},
+    {"Golongan": "Amina", "Pengertian": "Senyawa yang mengandung atom nitrogen dengan gugus alkil/aril."},
+    {"Golongan": "Protein", "Pengertian": "Polimer asam amino dengan ikatan peptida. Fungsi: enzim, transport, struktural, dsb."},
+    {"Golongan": "Lemak & Minyak", "Pengertian": "Lemak: padat pada suhu ruang (dari hewan). Minyak: cair pada suhu ruang (dari tumbuhan). Cadangan energi."},
+]
+
 # ========== DATA UJI SENYAWA ==========
 senyawa_data = {
     "Hidrokarbon": [
@@ -184,22 +204,41 @@ data_senyawa = [
     }
 ]
 
-
 # ========== KONFIGURASI HALAMAN ==========
-st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
+st.set_page_config(page_title="Uji Senyawa Kimia Lengkap", layout="wide")
 
-tab1, tab2, tab3 = st.tabs([
-    "🔍 Uji Senyawa",
+tab1, tab2, tab3, tab4 = st.tabs([
+    "📘 Pengertian Senyawa",
+    "🔬 Uji Senyawa",
     "📊 Kelarutan, Kebasaan & Titik Didih",
     "🧠 Quiz Golongan Senyawa"
 ])
 
-# ========== TAB 1 ==========
+# ========== TAB 1: Pengertian ==========
 with tab1:
+    st.title("📘 Pengertian Golongan Senyawa Kimia")
+    st.markdown("Pilih golongan senyawa di bawah ini untuk melihat penjelasannya.")
+
+    golongan_list = [x["Golongan"] for x in pengertian_senyawa]
+    selected = st.selectbox("Pilih Golongan Senyawa", golongan_list)
+
+    for item in pengertian_senyawa:
+        if item["Golongan"] == selected:
+            st.info(f"**{item['Golongan']}**")
+            st.write(item["Pengertian"])
+
+    if st.checkbox("Tampilkan Semua Pengertian"):
+        st.table({ 
+            "Golongan": [x["Golongan"] for x in pengertian_senyawa],
+            "Pengertian": [x["Pengertian"] for x in pengertian_senyawa]
+        })
+
+# ========== TAB 2: Uji Senyawa ==========
+with tab2:
     st.title("🔬 Uji Golongan Senyawa Kimia")
     st.markdown("Pilih golongan senyawa untuk melihat jenis uji, hasil positif, dan keterangannya.")
 
-    selected = st.selectbox("Pilih Golongan Senyawa", list(senyawa_data.keys()))
+    selected = st.selectbox("Pilih Golongan Senyawa", list(senyawa_data.keys()), key="uji")
     st.subheader(f"📋 Hasil Uji untuk: {selected}")
 
     for uji in senyawa_data[selected]:
@@ -207,8 +246,8 @@ with tab1:
             st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
             st.markdown(f"*Keterangan:* {uji['Keterangan']}")
 
-# ========== TAB 2 ==========
-with tab2:
+# ========== TAB 3: Kelarutan ==========
+with tab3:
     st.title("📊 Data Kelarutan, Kebasaan, dan Titik Didih Senyawa")
 
     tab_kel, tab_pH, tab_td = st.tabs(["Uji Kelarutan", "Kebasaan (pH)", "Titik Didih"])
@@ -234,8 +273,8 @@ with tab2:
             st.write(f"{s['titik_didih']} °C")
             st.write("---")
 
-# ========== TAB 3 ==========
-with tab3:
+# ========== TAB 4: Quiz ==========
+with tab4:
     st.title("🧠 Quiz Golongan Senyawa Kimia")
     semua_uji = []
     for golongan, daftar_uji in senyawa_data.items():
