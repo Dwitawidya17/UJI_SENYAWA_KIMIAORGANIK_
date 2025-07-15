@@ -150,11 +150,6 @@ with tab2:
         st.subheader("💡 Fakta Menarik Kimia")
         st.info(random.choice(fakta_menarik))
 
-   
-# ===================== FOOTER =====================
-st.markdown("---")
-st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
-
 import tkinter as tk
 from tkinter import messagebox
 
@@ -214,3 +209,8 @@ text_info = tk.Text(root, width=40, height=10, state='disabled', wrap='word')
 text_info.pack(padx=10, pady=10)
 
 root.mainloop()
+
+# ===================== FOOTER =====================
+st.markdown("---")
+st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
+
