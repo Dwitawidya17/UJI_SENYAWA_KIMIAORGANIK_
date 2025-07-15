@@ -1,7 +1,7 @@
 import streamlit as st
 import random
 
-# ===================== DATA UJI SENYAWA =====================
+# ========== DATA UJI SENYAWA ==========
 senyawa_data = {
     "Hidrokarbon": [
         {"Nama Uji": "Uji Pembakaran", "Hasil Positif": "Nyala kuning berasap", "Keterangan": "Aromatik"},
@@ -75,7 +75,7 @@ senyawa_data = {
     ]
 }
 
-# ===================== FAKTA MENARIK =====================
+# ========== FAKTA MENARIK ==========
 fakta_menarik = [
     "🧴 Lemak jenuh tidak bereaksi dengan larutan Baeyer, tapi lemak tak jenuh bisa.",
     "🧪 Fenol memberikan warna ungu dengan FeCl₃, berbeda dari alkohol biasa.",
@@ -84,30 +84,71 @@ fakta_menarik = [
     "🔬 Biuret test hanya positif jika terdapat dua atau lebih ikatan peptida.",
 ]
 
-# ===================== CONFIG STREAMLIT =====================
-st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
-tab1, tab2 = st.tabs(["🔍 Uji Senyawa", "🧠 Kuis Kimia"])
+# ========== DATA KELARUTAN, KEBASEAN, TITIK DIDIH ==========
+data_senyawa = [
+    {
+        "nama_jenis": "Etanol - Alkohol Primer",
+        "kelarutan": "Larut dalam air, etanol, kloroform",
+        "kebasaan": "Netral (pH ~ 7)",
+        "titik_didih": 78.37
+    },
+    {
+        "nama_jenis": "Aseton - Keton",
+        "kelarutan": "Larut dalam air dan pelarut organik",
+        "kebasaan": "Netral (pH ~ 7)",
+        "titik_didih": 56.05
+    },
+    {
+        "nama_jenis": "Asam asetat - Asam Karboksilat",
+        "kelarutan": "Larut dalam air, etanol",
+        "kebasaan": "Asam (pH ~ 2.4)",
+        "titik_didih": 118.1
+    },
+    {
+        "nama_jenis": "NaOH - Basa Kuat",
+        "kelarutan": "Sangat larut dalam air",
+        "kebasaan": "Basa (pH ~ 13-14)",
+        "titik_didih": 1390
+    },
+    {
+        "nama_jenis": "Benzena - Aromatik",
+        "kelarutan": "Tidak larut dalam air, larut pelarut non-polar",
+        "kebasaan": "Netral",
+        "titik_didih": 80.1
+    },
+    {
+        "nama_jenis": "Anilin - Amine Primer",
+        "kelarutan": "Larut sebagian dalam air, larut dalam asam",
+        "kebasaan": "Basa lemah",
+        "titik_didih": 184
+    }
+]
 
-# ===================== TAB 1: UJI SENYAWA =====================
+# ========== KONFIGURASI HALAMAN ==========
+st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
+tab1, tab2 = st.tabs(["🔍 Uji Senyawa", "📊 Kelarutan, Kebasaan & Titik Didih"])
+
+# ========== TAB 1: UJI SENYAWA ==========
 with tab1:
     st.title("🔬 Uji Golongan Senyawa Kimia")
     st.markdown("Pilih golongan senyawa untuk melihat jenis uji, hasil positif, dan keterangannya.")
 
     selected = st.selectbox("Pilih Golongan Senyawa", list(senyawa_data.keys()))
     st.subheader(f"📋 Hasil Uji untuk: {selected}")
+
     for uji in senyawa_data[selected]:
         with st.expander(uji["Nama Uji"]):
-            st.markdown(f"Hasil Positif: {uji['Hasil Positif']}")
-            st.markdown(f"Keterangan: {uji['Keterangan']}")
+            st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
+            st.markdown(f"*Keterangan:* {uji['Keterangan']}")
 
-# ===================== TAB 2: KUIS KIMIA =====================
-with tab2:
-    st.title("🧠 Kuis Golongan Senyawa")
+    # Quiz interaktif
+    st.markdown("---")
+    st.title("🧠 Kuis Golongan Senyawa Kimia")
 
     semua_uji = []
-    for gol, daftar_uji in senyawa_data.items():
+    for golongan, daftar_uji in senyawa_data.items():
         for uji in daftar_uji:
-            semua_uji.append({**uji, "Golongan": gol})
+            semua_uji.append({**uji, "Golongan": golongan})
 
     jumlah_soal = min(15, len(semua_uji))
 
@@ -151,6 +192,33 @@ with tab2:
         st.info(random.choice(fakta_menarik))
 
 
-# ===================== FOOTER =====================
+# ========== TAB 2: KELARUTAN, KEBASEAN, TITIK DIDIH ==========
+with tab2:
+    st.title("📊 Data Kelarutan, Kebasaan, dan Titik Didih Senyawa")
+
+    tab_kel, tab_pH, tab_td = st.tabs(["Uji Kelarutan", "Kebasaan (pH)", "Titik Didih"])
+
+    with tab_kel:
+        st.header("Uji Kelarutan Senyawa")
+        for s in data_senyawa:
+            st.subheader(s["nama_jenis"])
+            st.write(s["kelarutan"])
+            st.write("---")
+
+    with tab_pH:
+        st.header("Kebasaan Senyawa (pH)")
+        for s in data_senyawa:
+            st.subheader(s["nama_jenis"])
+            st.write(s["kebasaan"])
+            st.write("---")
+
+    with tab_td:
+        st.header("Titik Didih Senyawa (°C)")
+        for s in data_senyawa:
+            st.subheader(s["nama_jenis"])
+            st.write(f"{s['titik_didih']} °C")
+            st.write("---")
+
+# ========== FOOTER ==========
 st.markdown("---")
 st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
