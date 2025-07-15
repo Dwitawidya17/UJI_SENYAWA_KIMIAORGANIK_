@@ -176,4 +176,13 @@ with tab2:
         if salah:
             st.warning("❌ Jawaban yang salah:")
             for s in salah:
-                st.markdown(f"- {s[0]}: Jawabanmu **{s[1]}
+                st.markdown(f"- {s[0]}: Jawabanmu **{s[1]}**, seharusnya **{s[2]}**")
+
+        st.markdown("---")
+        st.subheader("💡 Fakta Menarik Kimia")
+        st.info(random.choice(fakta_menarik))
+
+
+# ===================== FOOTER =====================
+st.markdown("---")
+st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
