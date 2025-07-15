@@ -1,103 +1,90 @@
 import streamlit as st
+import pandas as pd
+import random
 
-# --- DATA SOAL KUIS (CONTOH SEDERHANA) ---
-quiz_data = [
+# DATA (dari gambar, sudah diketik manual sebelumnya — ringkas)
+data = [
     {
-        "image_url": "https://www.chemblink.com/structure/1/100-51-6.gif",  # Benzyl alcohol, contoh saja
-        "answer": "Benzyl alcohol"
+        "Golongan": "Hidrokarbon",
+        "Nama Uji": "Uji Pembakaran",
+        "Hasil Positif": "Nyala kuning berasap",
+        "Keterangan": "Aromatik"
     },
     {
-        "image_url": "https://www.chemsynthesis.com/base/structure_diagrams/635.gif",
-        "answer": "Benzaldehyde"
+        "Golongan": "Hidrokarbon",
+        "Nama Uji": "Uji Bromin",
+        "Hasil Positif": "Warna hilang",
+        "Keterangan": "Adisi ikatan rangkap"
     },
-    # Tambahkan lebih banyak soal (struktur kimia & nama)
+    {
+        "Golongan": "Alkohol Primer",
+        "Nama Uji": "Uji Lucas",
+        "Hasil Positif": "Tidak keruh / keruh lambat (>5 menit)",
+        "Keterangan": "Lambat bereaksi dengan ZnCl2/HCl"
+    },
+    {
+        "Golongan": "Fenol",
+        "Nama Uji": "Uji Ferri Klorida",
+        "Hasil Positif": "Warna ungu/biru",
+        "Keterangan": "Fenol positif"
+    },
+    {
+        "Golongan": "Aldehida",
+        "Nama Uji": "Uji Tollens",
+        "Hasil Positif": "Cermin perak",
+        "Keterangan": "Aldehida positif"
+    },
+    {
+        "Golongan": "Keton",
+        "Nama Uji": "Uji Tollens",
+        "Hasil Positif": "Negatif",
+        "Keterangan": "Tidak bereaksi"
+    },
+    {
+        "Golongan": "Protein",
+        "Nama Uji": "Uji Biuret",
+        "Hasil Positif": "Warna ungu",
+        "Keterangan": "Ikatan peptida"
+    },
+    # Tambahkan data lain sesuai tabel aslinya...
 ]
 
-# --- DATA UJI SENYAWA (dari tabel gambar, ringkas, edit sesuai kebutuhan) ---
-uji_data = {
-    "Hidrokarbon": [
-        {
-            "Nama Uji": "Uji Pembakaran",
-            "Hasil Positif": "Nyala kuning berasap",
-            "Keterangan": "Aromatik"
-        },
-        {
-            "Nama Uji": "Uji Bromin",
-            "Hasil Positif": "Warna hilang",
-            "Keterangan": "Adisi ikatan rangkap"
-        },
-        {
-            "Nama Uji": "Uji Baeyer",
-            "Hasil Positif": "Warna ungu hilang jadi coklat",
-            "Keterangan": "Ikatan rangkap"
-        },
-    ],
-    "Alkohol Primer": [
-        {
-            "Nama Uji": "Uji Lucas",
-            "Hasil Positif": "Tidak keruh/keruh lambat (>5 menit)",
-            "Keterangan": "Lambat bereaksi dengan ZnCl2/HCl"
-        },
-        {
-            "Nama Uji": "Uji Kromik (Jones)",
-            "Hasil Positif": "Oranye → hijau",
-            "Keterangan": "Oksidasi menjadi asam karboksilat"
-        },
-    ],
-    # ... Tambahkan semua golongan sesuai tabel ...
+df = pd.DataFrame(data)
+
+# --- STREAMLIT APP ---
+st.set_page_config(page_title="Uji Golongan Senyawa", layout="centered")
+
+st.title("🧪 Uji Golongan Senyawa Organik")
+st.write("Pilih golongan senyawa untuk melihat jenis uji, hasil positif, dan prinsip reaksinya.")
+
+golongan_list = sorted(df['Golongan'].unique())
+selected = st.selectbox("Pilih Golongan Senyawa:", golongan_list)
+
+filtered = df[df["Golongan"] == selected]
+
+st.subheader("📋 Hasil Uji:")
+st.table(filtered[["Nama Uji", "Hasil Positif", "Keterangan"]])
+
+# --- QUIZ SECTION ---
+st.markdown("---")
+st.subheader("🧠 Kuis Struktur Kimia")
+
+quiz_data = {
+    "struktur1.png": "Benzena",
+    "struktur2.png": "Etanol",
+    "struktur3.png": "Aseton",
 }
 
-# --- STREAMLIT UI ---
-st.set_page_config(page_title="Uji Golongan Senyawa", page_icon="⚗", layout="wide")
-st.title("Uji Golongan Senyawa Kimia")
+img_file = random.choice(list(quiz_data.keys()))
+st.image(f"images/{img_file}", caption="Struktur senyawa di atas")
 
-st.markdown("""
-Web interaktif untuk mencari informasi uji-uji kimia pada berbagai golongan senyawa organik, beserta deskripsi hasil positif dan penjelasannya.
-""")
+answer = st.text_input("Apa nama senyawa tersebut?")
+if answer:
+    if answer.strip().lower() == quiz_data[img_file].lower():
+        st.success("✅ Benar!")
+    else:
+        st.error(f"❌ Salah. Jawaban yang benar: {quiz_data[img_file]}")
 
-# Pilihan golongan senyawa
-golongan = st.selectbox("Pilih Golongan Senyawa:", list(uji_data.keys()))
-
-# Tampilkan semua uji untuk golongan tersebut
-if golongan:
-    st.subheader(f"Daftar Uji untuk {golongan}")
-    for uji in uji_data[golongan]:
-        with st.expander(uji["Nama Uji"]):
-            st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
-            st.markdown(f"*Keterangan/Prinsip:* {uji['Keterangan']}")
-
+# Footer
 st.markdown("---")
-
-# --- QUIZ KIMIA ---
-st.header("Quiz: Tebak Nama Senyawa dari Strukturnya")
-if "quiz_index" not in st.session_state:
-    st.session_state.quiz_index = 0
-    st.session_state.score = 0
-
-question = quiz_data[st.session_state.quiz_index]
-st.image(question["image_url"], width=200, caption="Struktur kimia, tebak namanya!")
-
-user_answer = st.text_input("Jawaban Anda (nama senyawa):", key="answer_key")
-if st.button("Cek Jawaban"):
-    if user_answer.strip().lower() == question["answer"].lower():
-        st.success("Benar!")
-        st.session_state.score += 1
-    else:
-        st.error(f"Salah, nama yang benar: {question['answer']}")
-
-    if st.session_state.quiz_index < len(quiz_data) - 1:
-        st.session_state.quiz_index += 1
-    else:
-        st.write(f"Quiz selesai! Skor Anda: {st.session_state.score}/{len(quiz_data)}")
-        st.session_state.quiz_index = 0
-        st.session_state.score = 0
-
-# --- Styling tambahan ---
-st.markdown("""
-<style>
-    .stApp {
-        background-color: #f7f7ff;
-        font-family: 'Roboto', sans-serif;
-    }
-</style>
-""", unsafe_allow_html=True)
+st.markdown("🧬 Dibuat dengan ❤ menggunakan Streamlit")
