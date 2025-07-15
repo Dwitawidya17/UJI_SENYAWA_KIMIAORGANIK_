@@ -150,12 +150,7 @@ with tab2:
         st.subheader("💡 Fakta Menarik Kimia")
         st.info(random.choice(fakta_menarik))
 
-    # Tombol untuk reset kuis
-    if st.button("🔄 Ulangi Kuis"):
-        st.session_state.pop("soal_kuis", None)
-        st.session_state.pop("opsi_kuis", None)
-        st.experimental_rerun()
-
+   
 # ===================== FOOTER =====================
 st.markdown("---")
 st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
