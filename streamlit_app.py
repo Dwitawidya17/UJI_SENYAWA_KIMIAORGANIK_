@@ -154,7 +154,7 @@ with tab2:
 with tab3:
     st.title("Tabel Periodik")
 # Data unsur periodik: simbol => info detail
-periodic_elements = {
+periodic_elements = 
     "H": {
         "name": "Hydrogen",
         "atomic_number": 1,
