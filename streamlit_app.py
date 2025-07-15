@@ -183,6 +183,27 @@ with tab3:
     st.write(f"**Massa Atom:** {data_unsur['Massa Atom']}")
     st.write(f"**Keterangan:** {data_unsur['Keterangan']}")
 
+# Contoh data struktur dan reaksi
+struktur_dan_reaksi = {
+    "Alkohol Primer": {
+        "struktur": "struktur/alkohol_primer.png",  # letakkan gambar ini di folder struktur/
+        "reaksi": "Alkohol primer dapat mengalami oksidasi menjadi aldehida, kemudian asam karboksilat.\nReaksi umum:\nR-CH2OH → R-CHO → R-COOH",
+        "deskripsi": "Alkohol primer memiliki gugus -OH yang melekat pada karbon primer."
+    },
+    "Fenol": {
+        "struktur": "struktur/fenol.png",
+        "reaksi": "Fenol bereaksi dengan FeCl3 membentuk kompleks berwarna ungu.\nReaksi substitusi juga terjadi dengan brom pada cincin aromatik.",
+        "deskripsi": "Fenol adalah senyawa dengan gugus -OH yang berikatan langsung ke cincin aromatik."
+    },
+    "Aldehida": {
+        "struktur": "struktur/aldehida.png",
+        "reaksi": "Aldehida dapat teroksidasi menjadi asam karboksilat dan memberikan cermin perak dengan reagen Tollens.",
+        "deskripsi": "Aldehida memiliki gugus karbonil (C=O) di ujung rantai karbon."
+    },
+    # Tambahkan sesuai kebutuhan
+}
+
+
 # ===================== FOOTER =====================
 st.markdown("---")
 st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
