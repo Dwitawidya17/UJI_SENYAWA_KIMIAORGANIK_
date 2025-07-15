@@ -84,9 +84,8 @@ fakta_menarik = [
     "🔬 Biuret test hanya positif jika terdapat dua atau lebih ikatan peptida.",
 ]
 
-# ===================== CONFIGURASI STREAMLIT =====================
+# ===================== CONFIG STREAMLIT =====================
 st.set_page_config(page_title="Uji Senyawa Kimia", layout="wide")
-
 tab1, tab2 = st.tabs(["🔍 Uji Senyawa", "🧠 Kuis Kimia"])
 
 # ===================== TAB 1: UJI SENYAWA =====================
@@ -94,9 +93,9 @@ with tab1:
     st.title("🔬 Uji Golongan Senyawa Kimia")
     st.markdown("Pilih golongan senyawa untuk melihat jenis uji, hasil positif, dan keterangannya.")
 
-    selected_golongan = st.selectbox("Pilih Golongan Senyawa", list(senyawa_data.keys()))
-    st.subheader(f"📋 Hasil Uji untuk: {selected_golongan}")
-    for uji in senyawa_data[selected_golongan]:
+    selected = st.selectbox("Pilih Golongan Senyawa", list(senyawa_data.keys()))
+    st.subheader(f"📋 Hasil Uji untuk: {selected}")
+    for uji in senyawa_data[selected]:
         with st.expander(uji["Nama Uji"]):
             st.markdown(f"*Hasil Positif:* {uji['Hasil Positif']}")
             st.markdown(f"*Keterangan:* {uji['Keterangan']}")
@@ -105,29 +104,32 @@ with tab1:
 with tab2:
     st.title("🧠 Kuis Golongan Senyawa")
 
-    # Kumpulkan semua uji sebagai sumber soal
     semua_uji = []
-    for golongan, daftar_uji in senyawa_data.items():
+    for gol, daftar_uji in senyawa_data.items():
         for uji in daftar_uji:
-            semua_uji.append({**uji, "Golongan": golongan})
+            semua_uji.append({**uji, "Golongan": gol})
 
     jumlah_soal = min(15, len(semua_uji))
 
-    # Simpan soal ke session_state agar tidak berubah saat rerun
     if "soal_kuis" not in st.session_state:
         st.session_state["soal_kuis"] = random.sample(semua_uji, k=jumlah_soal)
+        st.session_state["opsi_kuis"] = []
+        for soal in st.session_state["soal_kuis"]:
+            opsi = random.sample(list(senyawa_data.keys()), 4)
+            if soal["Golongan"] not in opsi:
+                opsi[random.randint(0, 3)] = soal["Golongan"]
+            random.shuffle(opsi)
+            st.session_state["opsi_kuis"].append(opsi)
 
     soal_kuis = st.session_state["soal_kuis"]
+    opsi_kuis = st.session_state["opsi_kuis"]
 
     st.markdown("Jawab semua soal terlebih dahulu, lalu klik *Submit Jawaban Semua*.")
 
     jawaban_pengguna = {}
     for i, soal in enumerate(soal_kuis, 1):
         st.markdown(f"*Soal {i}:* {soal['Nama Uji']} → Hasil: {soal['Hasil Positif']}")
-        opsi = random.sample(list(senyawa_data.keys()), 4)
-        if soal["Golongan"] not in opsi:
-            opsi[random.randint(0, 3)] = soal["Golongan"]
-        random.shuffle(opsi)
+        opsi = opsi_kuis[i - 1]
         jawaban = st.radio("Pilih Golongan:", opsi, key=f"kuis_{i}")
         jawaban_pengguna[f"soal_{i}"] = {"jawaban": jawaban, "benar": soal["Golongan"]}
 
@@ -144,6 +146,16 @@ with tab2:
             for s in salah:
                 st.markdown(f"- *{s[0]}: Jawabanmu **{s[1]}, seharusnya **{s[2]}*")
 
-    st.markdown("---")
-    st.subheader("💡 Fakta Menarik Kimia")
-    st.info(random.choice(fakta_menarik))
+        st.markdown("---")
+        st.subheader("💡 Fakta Menarik Kimia")
+        st.info(random.choice(fakta_menarik))
+
+    # Tombol untuk reset kuis
+    if st.button("🔄 Ulangi Kuis"):
+        st.session_state.pop("soal_kuis", None)
+        st.session_state.pop("opsi_kuis", None)
+        st.experimental_rerun()
+
+# ===================== FOOTER =====================
+st.markdown("---")
+st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
