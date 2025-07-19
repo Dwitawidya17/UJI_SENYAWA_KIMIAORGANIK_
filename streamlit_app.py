@@ -125,7 +125,8 @@ fakta_menarik = [
 # ========== KONFIGURASI HALAMAN ==========
 st.set_page_config(page_title="Uji Senyawa Kimia Lengkap", layout="wide")
 
-tab1, tab2, tab3, tab4 = st.tabs([
+tab1, tab2, tab3, tab4, tab5 = st.tabs([
+    "📘 Pengertian EsterMoon",
     "📘 Pengertian Senyawa",
     "🔬 Uji Senyawa",
     "📊 Kelarutan, Kebasaan & Titik Didih",
@@ -211,7 +212,7 @@ with tab3:
             st.write(f"{s['titik_didih']} °C")
             st.write("---")
 
-# ========== TAB 4: Quiz ==========
+# ========== TAB 5: Quiz ==========
 with tab4:
     st.title("🧠 Quiz Golongan Senyawa Kimia")
     semua_uji = []
