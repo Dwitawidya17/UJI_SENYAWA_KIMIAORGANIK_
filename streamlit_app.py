@@ -1,11 +1,6 @@
 import streamlit as st
 import random
 
-# ========== DATA ESTER MOON ==========
-pengertian_estermoon = [
-   {Ester Moon adalah aplikasi web yang bergerak dalam menyediakan bahan ajar berupa kumpulan materi praktikum analisis titrimetri dan kimia organik. Materi praktikum yang tersedia merupakan materi dasar yang dapat mengasah skill analis dalam bidang analitik. Selain materi praktikum, aplikasi web ini menyediakan fitur berupa kalkulator perhitungan konsentrasi dan normalitas larutan untuk standardisasi. Dengan adanya aplikasi web ini analis akan lebih mudah dalam mengakses bahan ajar praktikum, karena bahan ajar yang tersedia sangat fleksibel dan bisa diakses kapan saja.}
-]
-
 # ========== DATA PENGERTIAN GOLONGAN SENYAWA ==========
 pengertian_senyawa = [
     {"Golongan": "Hidrokarbon", "Pengertian": "Senyawa organik yang hanya terdiri dari karbon (C) dan hidrogen (H). Dibagi menjadi: Alkana (jenuh), Alkena (tak jenuh dengan ikatan rangkap dua), Alkuna (ikatan rangkap tiga), Aromatik (cincin benzena)."},
@@ -122,17 +117,19 @@ fakta_menarik = [
 ]
 
 # ========== KONFIGURASI HALAMAN ==========
+# ========== KONFIGURASI HALAMAN ==========
 st.set_page_config(page_title="Uji Senyawa Kimia Lengkap", layout="wide")
 
+# ========== TAB-TAB ==========
 tab1, tab2, tab3, tab4, tab5 = st.tabs([
-    "📘 EsterMoon",
+    "📘 Pengertian EsterMoon",
     "📘 Pengertian Senyawa",
     "🔬 Uji Senyawa",
     "📊 Kelarutan, Kebasaan & Titik Didih",
     "🧠 Quiz Golongan Senyawa"
 ])
 
-# ========== TAB 1: Ester Moon ==========
+# ========== TAB 1: ESTER MOON ==========
 with tab1:
     st.header("Apa Itu Ester Moon?")
     st.write("""
@@ -148,13 +145,14 @@ with tab1:
         "Anita Tiara Angel",
         "Dwita Widya Putri",
         "Marsya Madina Munir",
-        "Najwa Ananda Efendi",
+        "Najwa Ananda Effendy",
         "Shella Rivana Auliya"
     ]
     for nama in anggota:
         st.write(f"- {nama}")
 
-# ========== TAB 2: Pengertian ==========
+# ========== TAB 2: PENGERTIAN GOLONGAN SENYAWA ==========
+# Asumsikan variabel pengertian_senyawa sudah tersedia
 with tab2:
     st.title("📘 Pengertian Golongan Senyawa Kimia")
     st.markdown("Pilih golongan senyawa di bawah ini untuk melihat penjelasannya.")
@@ -173,7 +171,8 @@ with tab2:
             "Pengertian": [x["Pengertian"] for x in pengertian_senyawa]
         })
 
-# ========== TAB 3: Uji Senyawa ==========
+# ========== TAB 3: UJI SENYAWA ==========
+# Asumsikan variabel senyawa_data sudah tersedia
 with tab3:
     st.title("🔬 Uji Golongan Senyawa Kimia")
     st.markdown("Pilih golongan senyawa untuk melihat jenis uji, hasil positif, dan keterangannya.")
@@ -186,7 +185,8 @@ with tab3:
             st.markdown(f"Hasil Positif: {uji['Hasil Positif']}")
             st.markdown(f"Keterangan: {uji['Keterangan']}")
 
-# ========== TAB 4: Kelarutan ==========
+# ========== TAB 4: KELARUTAN, PH, TITIK DIDIH ==========
+# Asumsikan variabel data_senyawa sudah tersedia
 with tab4:
     st.title("📊 Data Kelarutan, Kebasaan, dan Titik Didih Senyawa")
 
@@ -213,7 +213,8 @@ with tab4:
             st.write(f"{s['titik_didih']} °C")
             st.write("---")
 
-# ========== TAB 5: Quiz ==========
+# ========== TAB 5: QUIZ ==========
+# Asumsikan variabel fakta_menarik sudah tersedia
 with tab5:
     st.title("🧠 Quiz Golongan Senyawa Kimia")
     semua_uji = []
@@ -256,7 +257,7 @@ with tab5:
         if salah:
             st.warning("❌ Jawaban yang salah:")
             for s in salah:
-                st.markdown(f"- {s[0]}: Jawabanmu {s[1]}, seharusnya **{s[2]}")
+                st.markdown(f"- {s[0]}: Jawabanmu {s[1]}, seharusnya *{s[2]}")
 
         st.markdown("---")
         st.subheader("💡 Fakta Menarik Kimia")
@@ -264,4 +265,4 @@ with tab5:
 
 # ========== FOOTER ==========
 st.markdown("---")
-st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
+st.caption("© 2025 | Uji Senyawa Kimia Interaktif by Streamlit 🎓")
