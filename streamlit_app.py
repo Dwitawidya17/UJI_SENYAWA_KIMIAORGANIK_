@@ -1,5 +1,10 @@
 import streamlit as st import random
 
+# ========== DATA PENGERTIAN ESTER MOON ==========
+pengertian_estermoon = [
+   {Ester Moon adalah aplikasi web yang bergerak dalam menyediakan bahan ajar berupa kumpulan materi praktikum analisis titrimetri dan kimia organik. Materi praktikum yang tersedia merupakan materi dasar yang dapat mengasah skill analis dalam bidang analitik. Selain materi praktikum, aplikasi web ini menyediakan fitur berupa kalkulator perhitungan konsentrasi dan normalitas larutan untuk standardisasi. Dengan adanya aplikasi web ini analis akan lebih mudah dalam mengakses bahan ajar praktikum, karena bahan ajar yang tersedia sangat fleksibel dan bisa diakses kapan saja.}
+]
+
 # ========== DATA PENGERTIAN GOLONGAN SENYAWA ==========
 pengertian_senyawa = [
     {"Golongan": "Hidrokarbon", "Pengertian": "Senyawa organik yang hanya terdiri dari karbon (C) dan hidrogen (H). Dibagi menjadi: Alkana (jenuh), Alkena (tak jenuh dengan ikatan rangkap dua), Alkuna (ikatan rangkap tiga), Aromatik (cincin benzena)."},
