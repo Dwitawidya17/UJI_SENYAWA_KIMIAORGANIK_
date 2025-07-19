@@ -1,6 +1,16 @@
 import streamlit as st
 
 # ========== DATA ==========
+# Pengertian Ester Moon
+pengertian = {
+    "Ester Moon adalah aplikasi web yang bergerak dalam menyediakan bahan ajar berupa kumpulan 
+    materi praktikum analisis titrimetri dan kimia organik. Materi praktikum yang tersedia merupakan 
+    materi dasar yang dapat mengasah skill analis dalam bidang analitik. Selain materi praktikum, a
+    plikasi web ini menyediakan fitur berupa kalkulator perhitungan konsentrasi dan normalitas larutan
+    untuk standardisasi. Dengan adanya aplikasi web ini analis akan lebih mudah dalam mengakses bahan 
+    ajar praktikum, karena bahan ajar yang tersedia sangat fleksibel dan bisa diakses kapan saja."
+    "list nama kelompok 03 Anita Tiara Angel, Dwita Widya Putri, Marsya Madina Munir, Najwa Ananda Effendy, Shella Rivana Auliya"
+}
 
 # Pengertian golongan senyawa
 pengertian = {
