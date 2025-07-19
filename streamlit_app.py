@@ -2,7 +2,7 @@ import streamlit as st
 
 # ========== DATA ==========
 # Pengertian Ester Moon
-pengertian = {
+pengertian = { 
     "Ester Moon adalah aplikasi web yang bergerak dalam menyediakan bahan ajar berupa kumpulan 
     materi praktikum analisis titrimetri dan kimia organik. Materi praktikum yang tersedia merupakan 
     materi dasar yang dapat mengasah skill analis dalam bidang analitik. Selain materi praktikum, a
